@@ -11,7 +11,7 @@ public class GameField {
     HashMap<Point, GameElement> map;
 
     public GameField(){
-        map = HashMap<Point, GameElement>;
+        map = new HashMap<Point, GameElement>();
     }
 
 
@@ -30,7 +30,7 @@ public class GameField {
         map.put(p, element);
     }
 
-    public void addValue(Point p, GameElement element)
+    public void removeValue(Point p, GameElement element)
     {
 
     }
