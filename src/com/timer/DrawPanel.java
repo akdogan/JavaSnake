@@ -19,9 +19,14 @@ class DrawPanel extends JPanel {
         super.paintComponent(g);
         for (Snake s : snakes)
         {
+
             g.setColor(s.getColor());
-            Point p = s.getSegment(0);
-            g.fillRect(p.x, p.y, 9, 9);
+            for (int i = 0; i < s.getNumberOfSegments(); i++)
+            {
+                Point p = s.getSegment(i);
+                g.fillRect(p.x, p.y, 9, 9);
+            }
+
         }
 
     }

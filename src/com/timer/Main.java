@@ -1,5 +1,7 @@
 package com.timer;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.awt.*;
 import java.util.Timer;
@@ -22,6 +24,8 @@ public class Main {
 		f.setSize( 800, 600 );
 		f.add(canvas);
 		f.setVisible( true );
+		SnakeKeyListener sKL = new SnakeKeyListener(player1);
+		f.addKeyListener(sKL);
 
 		Timer timer = new Timer();
 		timer.schedule( new TimedDraw(canvas, f), 1000, 50);

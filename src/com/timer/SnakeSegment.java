@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * Created by Arif-Admin on 03.03.2017.
  */
-public class SnakeSegment {
+public class SnakeSegment extends GameElement{
     Point p;
     int length;
     public SnakeSegment(Point p, int length)
