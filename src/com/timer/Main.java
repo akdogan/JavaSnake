@@ -2,8 +2,9 @@ package com.timer;
 
 import java.util.ArrayList;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Timer;
-import java.awt.Graphics;
 import javax.swing.*;
 
 public class Main {
@@ -11,15 +12,18 @@ public class Main {
     public static void main(String[] args) {
 
 		Snake player1 = new Snake(new Point(300, 300), 3, Color.BLUE);
-		//Snake player2 = new Snake(10, 10, 50, Color.ORANGE);
-		ArrayList<Snake> players = new ArrayList<Snake>();
+		ArrayList<Snake> players = new ArrayList<>();
 		players.add(player1);
-		//players.add(player2);
 
 		DrawPanel canvas = new DrawPanel(players);
 		JFrame f = new JFrame();
-		f.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		f.setSize( 800, 600 );
+
+		f.addKeyListener(new KeyListener(player1));
+
+		HashMap test = new HashMap<Point, Object>();
+
 		f.add(canvas);
 		f.setVisible( true );
 

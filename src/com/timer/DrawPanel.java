@@ -6,6 +6,7 @@ package com.timer;
 import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 class DrawPanel extends JPanel {
     ArrayList<Snake> snakes;
@@ -20,10 +21,12 @@ class DrawPanel extends JPanel {
         for (Snake s : snakes)
         {
             g.setColor(s.getColor());
-            Point p = s.getSegment(0);
-            g.fillRect(p.x, p.y, 9, 9);
+            for (Iterator<SnakeSegment> i = s.getSegments(); i.hasNext();)
+            {
+                SnakeSegment segment = i.next();
+                g.fillRect(segment.p.x, segment.p.y, 9, 9);
+            }
         }
-
     }
 
 

@@ -23,7 +23,7 @@ class TimedMove extends TimerTask
 
     @Override public void run()
     {
-        moveSnakeRandomly();
+        //moveSnakeRandomly();
         TimerSnakes.get(0).moveSnake();
 
     }
@@ -32,12 +32,12 @@ class TimedMove extends TimerTask
     {
         Random r = new Random();
         int chanceForChange = r.nextInt(10);
-        System.out.println("ChanceForChange: " + chanceForChange);
+        //System.out.println("ChanceForChange: " + chanceForChange);
         if (chanceForChange > 5)
         {
-            System.out.print("NEW DIRECTION: ");
+            //System.out.print("NEW DIRECTION: ");
             int dir = r.nextInt(4) + 1;
-            System.out.println(dir);
+            //System.out.println(dir);
             this.TimerSnakes.get(0).changeDirection(dir);
         }
 
