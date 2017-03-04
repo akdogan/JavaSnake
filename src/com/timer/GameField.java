@@ -1,4 +1,4 @@
-import com.timer.GameElement;
+package com.timer;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -30,9 +30,9 @@ public class GameField {
         map.put(p, element);
     }
 
-    public void removeValue(Point p, GameElement element)
+    public void removeValue(Point p)
     {
-
+        this.map.remove(p);
     }
 
 }

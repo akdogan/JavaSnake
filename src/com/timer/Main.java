@@ -12,7 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-		Snake player1 = new Snake(new Point(300, 300), 3, Color.BLUE);
+		GameField game = new GameField();
+    	Snake player1 = new Snake(new Point(300, 300), 3, Color.BLUE, game);
 		//Snake player2 = new Snake(10, 10, 50, Color.ORANGE);
 		ArrayList<Snake> players = new ArrayList<Snake>();
 		players.add(player1);
@@ -28,8 +29,8 @@ public class Main {
 		f.addKeyListener(sKL);
 
 		Timer timer = new Timer();
-		timer.schedule( new TimedDraw(canvas, f), 1000, 50);
-		timer.schedule( new TimedMove(players), 1000, 200);
+		timer.schedule( new TimedDraw(canvas, f), 1000, 20);
+		timer.schedule( new TimedMove(players), 1000, 120);
 
 	}
 

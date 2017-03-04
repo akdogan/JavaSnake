@@ -12,5 +12,6 @@ public class SnakeSegment extends GameElement{
     {
         this.p = p;
         this.length = length;
+
     }
 }

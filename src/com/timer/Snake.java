@@ -12,10 +12,12 @@ import javax.swing.*;
 public class Snake {
     private ArrayList<SnakeSegment> body;
     private Color col;
+    private Color defaultColor;
+    private GameField map;
     private int xMovement;
     private int yMovement;
     private boolean growSnake;
-
+    private boolean resetColor;
 
     public static final int LEFT = 1;
     public static final int UP = 2;
@@ -26,12 +28,16 @@ public class Snake {
     // Hardcoded hack
     static final int MOVE = 10;
 
-    public Snake(Point p, int dir, Color col)
+    public Snake(Point p, int dir, Color col, GameField map)
     {
         this.col = col;
+        this.defaultColor = col;
+        this.map = map;
         body = new ArrayList<SnakeSegment>();
+
         this.newSegment(p);
         this.growSnake = false;
+        resetColor = false;
         this.xMovement = 0;
         this.yMovement = 0;
         this.changeDirection(dir);
@@ -44,14 +50,31 @@ public class Snake {
     public void moveSnake()
     {
 
-        Point temp = new Point(
+        if (resetColor)
+        {
+            this.col = this.defaultColor;
+            this.resetColor = false;
+        }
+
+        Point tempPoint = new Point(
                 body.get(0).p.x + this.xMovement,
                 body.get(0).p.y + this.yMovement
         );
-        body.add(0, new SnakeSegment(temp, LENGTH));
+
+        if (this.map.locationHasContent(tempPoint))
+        {
+            System.out.println("COLLISION DETECTED");
+            this.col = Color.RED;
+            this.resetColor = true;
+        }
+
+
+        this.newSegment(tempPoint, 0);
+
+
         if (!growSnake)
         {
-            body.remove(body.size()-1);
+            this.removeSegment(body.size()-1);
         }
         else {
             this.growSnake = false;
@@ -106,13 +129,30 @@ public class Snake {
     public void newSegment(Point p)
     {
 
-        body.add(new SnakeSegment(p, LENGTH));
+        SnakeSegment tempSegment = new SnakeSegment(p, LENGTH);
+        body.add(tempSegment);
+        this.map.addValue(p, tempSegment);
+
     }
 
-    public void newSegment()
+    public void newSegment(Point p, int index)
     {
+        SnakeSegment tempSegment = new SnakeSegment(p, LENGTH);
+        body.add(index, tempSegment);
+        this.map.addValue(tempSegment.p, tempSegment);
+    }
 
-        body.add(new SnakeSegment(body.get(body.size()-1).p, LENGTH));
+    public void newLastSegment()
+    {
+        SnakeSegment tempSegment = new SnakeSegment(body.get(body.size()-1).p, LENGTH);
+        body.add(tempSegment);
+        this.map.addValue(tempSegment.p, tempSegment);
+    }
+
+    public void removeSegment(int index)
+    {
+        this.map.removeValue(this.body.get(index).p);
+        this.body.remove(index);
     }
 
     public Point getSegment(int index)
