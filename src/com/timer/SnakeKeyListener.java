@@ -33,7 +33,9 @@ public class SnakeKeyListener implements KeyListener
             case 40: s.changeDirection(Snake.DOWN);
                 break;
             case 83: s.setGrowth(true);
-            break;
+                break;
+            case 88: System.out.println("BREAK");
+                break;
         }
     }
 

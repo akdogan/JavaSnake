@@ -24,10 +24,6 @@ public class Snake {
     public static final int RIGHT = 3;
     public static final int DOWN = 4;
 
-    static final int LENGTH = 10;
-    // Hardcoded hack
-    static final int MOVE = 10;
-
     public Snake(Point p, int dir, Color col, GameField map)
     {
         this.col = col;
@@ -60,13 +56,8 @@ public class Snake {
                 body.get(0).p.x + this.xMovement,
                 body.get(0).p.y + this.yMovement
         );
+        this.detectCollision(tempPoint);
 
-        if (this.map.locationHasContent(tempPoint))
-        {
-            System.out.println("COLLISION DETECTED");
-            this.col = Color.RED;
-            this.resetColor = true;
-        }
 
 
         this.newSegment(tempPoint, 0);
@@ -86,6 +77,25 @@ public class Snake {
         //System.out.println("Snake X: " + body.get(0).p.x);
     }
 
+    private void detectCollision(Point tempPoint) {
+        if (this.map.locationHasContent(tempPoint))
+        {
+            System.out.println("COLLISION DETECTED");
+            if (this.map.checkLocation(tempPoint) instanceof Fruit)
+            {
+                this.map.removeFruit(tempPoint);
+                this.setGrowth(true);
+            }
+            else if (this.map.checkLocation(tempPoint) instanceof SnakeSegment )
+            {
+                System.out.println(" ITS MY TAIL");
+            }
+
+            this.col = Color.RED;
+            this.resetColor = true;
+        }
+    }
+
     /*
     Changes the direction if the Snake like this:
     1 : Left
@@ -100,26 +110,26 @@ public class Snake {
         {
             case LEFT:
             {
-                this.xMovement = 0 - MOVE;
+                this.xMovement = 0 - SnakeConfig.GRID_SIZE;
                 this.yMovement = 0;
             }
             break;
             case UP:
             {
                 this.xMovement = 0;
-                this.yMovement = 0 - MOVE;
+                this.yMovement = 0 - SnakeConfig.GRID_SIZE;
             }
             break;
             case RIGHT:
             {
-                this.xMovement = MOVE;
+                this.xMovement = SnakeConfig.GRID_SIZE;
                 this.yMovement = 0;
             }
             break;
             case DOWN:
             {
                 this.xMovement = 0;
-                this.yMovement = MOVE;
+                this.yMovement = SnakeConfig.GRID_SIZE;
             }
             break;
         }
@@ -129,7 +139,7 @@ public class Snake {
     public void newSegment(Point p)
     {
 
-        SnakeSegment tempSegment = new SnakeSegment(p, LENGTH);
+        SnakeSegment tempSegment = new SnakeSegment(p, SnakeConfig.GRID_SIZE);
         body.add(tempSegment);
         this.map.addValue(p, tempSegment);
 
@@ -137,14 +147,14 @@ public class Snake {
 
     public void newSegment(Point p, int index)
     {
-        SnakeSegment tempSegment = new SnakeSegment(p, LENGTH);
+        SnakeSegment tempSegment = new SnakeSegment(p, SnakeConfig.GRID_SIZE);
         body.add(index, tempSegment);
         this.map.addValue(tempSegment.p, tempSegment);
     }
 
     public void newLastSegment()
     {
-        SnakeSegment tempSegment = new SnakeSegment(body.get(body.size()-1).p, LENGTH);
+        SnakeSegment tempSegment = new SnakeSegment(body.get(body.size()-1).p, SnakeConfig.GRID_SIZE);
         body.add(tempSegment);
         this.map.addValue(tempSegment.p, tempSegment);
     }
