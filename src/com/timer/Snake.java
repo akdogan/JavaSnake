@@ -18,6 +18,7 @@ public class Snake {
     private int yMovement;
     private boolean growSnake;
     private boolean resetColor;
+    private int score;
 
     public static final int LEFT = 1;
     public static final int UP = 2;
@@ -29,6 +30,7 @@ public class Snake {
         this.col = col;
         this.defaultColor = col;
         this.map = map;
+        this.score = 0;
         body = new ArrayList<SnakeSegment>();
 
         this.newSegment(p);
@@ -85,10 +87,11 @@ public class Snake {
             {
                 this.map.removeFruit(tempPoint);
                 this.setGrowth(true);
+                this.score++;
             }
             else if (this.map.checkLocation(tempPoint) instanceof SnakeSegment )
             {
-                System.out.println(" ITS MY TAIL");
+                this.map.stopGame(this.score);
             }
 
             this.col = Color.RED;

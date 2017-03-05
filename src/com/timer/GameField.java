@@ -1,7 +1,7 @@
 package com.timer;
 
 import javax.swing.*;
-import javax.swing.Timer;
+import java.util.Timer;
 import java.awt.*;
 import java.util.*;
 
@@ -13,6 +13,11 @@ public class GameField {
 
     HashMap<Point, GameElement> map;
     ArrayList<Fruit> fruits;
+    private Timer timer;
+    private JFrame f;
+    private TimedDraw drawTask;
+    private TimedMove moveTask;
+    private DrawPanel canvas;
 
     public GameField()
     {
@@ -24,8 +29,10 @@ public class GameField {
         ArrayList<Snake> players = new ArrayList<Snake>();
         players.add(player1);
 
-        DrawPanel canvas = new DrawPanel(players, fruits);
-        JFrame f = new JFrame();
+        this.canvas = new DrawPanel(players, fruits);
+
+
+        f = new JFrame();
         f.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         f.setSize( SnakeConfig.WINDOW_WIDTH, SnakeConfig.WINDOW_HEIGHT );
         f.add(canvas);
@@ -33,9 +40,13 @@ public class GameField {
         SnakeKeyListener sKL = new SnakeKeyListener(players.get(0));
         f.addKeyListener(sKL);
 
-        java.util.Timer timer = new java.util.Timer();
-        timer.schedule( new TimedDraw(canvas, f), 1000, 20);
-        timer.schedule( new TimedMove(players), 1000, 120);
+        this.timer = new java.util.Timer();
+
+        this.drawTask = new TimedDraw(canvas, f);
+        this.moveTask = new TimedMove(players);
+        //timer.schedule( drawTask, 1000, 20);
+        timer.scheduleAtFixedRate( moveTask, 1000, 120);
+        timer.scheduleAtFixedRate(drawTask, 1000, 120);
     }
 
 
@@ -74,8 +85,23 @@ public class GameField {
                newFruit();
            }
        }
+    }
 
+    public void stopGame(int score)
+    {
 
+        //System.out.println(this.drawTask.scheduledExecutionTime());
+        this.drawTask.switchTaskOff();
+        this.timer.cancel();
+        DrawMenu gameover = new DrawMenu(score);
+        System.out.println(f.getComponent(0));
+        f.remove(canvas);
+
+        f.add(gameover);
+        f.setVisible( true );
+        f.repaint();
+        //Timer menuTimer = new Timer();
+        //menuTimer.schedule(new TimedDraw(gameover, f), 1000, 20);
 
     }
 

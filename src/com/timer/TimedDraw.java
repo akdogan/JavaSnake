@@ -8,19 +8,31 @@ import java.util.TimerTask;
 import java.util.ArrayList;
 class TimedDraw extends TimerTask
 {
-    DrawPanel TimerCanvas;
-
+    JPanel screen;
     JFrame f;
-    public TimedDraw(DrawPanel TimerCanvas, JFrame f)
-    {
-        this.TimerCanvas = TimerCanvas;
+    boolean continueRunning;
 
+    public TimedDraw(JPanel screen, JFrame f)
+    {
+        this.screen = screen;
+        this.continueRunning = true;
         this.f = f;
+    }
+
+    public void switchTaskOff()
+    {
+        this.continueRunning = false;
     }
 
 
     @Override public void run()
     {
-        f.repaint();
+        if (continueRunning)
+        {
+
+            f.repaint();
+        }
+        //f.repaint();
+
     }
 }
