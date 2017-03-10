@@ -37,7 +37,12 @@ class DrawPanel extends JPanel {
         {
             g.setColor(f.getColor());
             Point p = f.p;
-            g.fillRect(p.x, p.y, SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
+            //g.fillRect(p.x, p.y, SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
+            g.fillOval(
+                    p.x,
+                    p.y,
+                    SnakeConfig.GRID_SIZE,
+                    SnakeConfig.GRID_SIZE);
         }
 
         // Draw the obstacles

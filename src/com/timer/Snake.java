@@ -94,7 +94,7 @@ public class Snake {
                 this.map.stopGame(this.score);
             }
 
-            this.col = Color.RED;
+            this.col = new Color(25, 192, 229);
             this.resetColor = true;
         }
     }
