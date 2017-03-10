@@ -14,7 +14,7 @@ public class Fruit extends GameElement {
     public Fruit(GameField map)
     {
 
-        Point tempPoint = createPosition();
+        Point tempPoint = createPosition(map);
         this.p = tempPoint;
         this.col = SnakeConfig.FRUIT_STANDARD_COLOR;
         map.addValue(this.p, this);
@@ -22,12 +22,16 @@ public class Fruit extends GameElement {
 
 
 
-    private Point createPosition()
+    private Point createPosition(GameField map)
     {
         Random r = new Random();
-        int tempX = 10* (r.nextInt((SnakeConfig.WINDOW_WIDTH / 10 - 1) + 1));
-        int tempY = 10* (r.nextInt((SnakeConfig.WINDOW_HEIGHT / 10 - 1) + 1));
-        return new Point(tempX, tempY);
+        Point tempPoint = new Point();
+        do {
+            tempPoint.x = 10* (r.nextInt((SnakeConfig.FIELD_WIDTH / 10 - 2) + 1));
+            tempPoint.y = 10* (r.nextInt((SnakeConfig.FIELD_HEIGHT / 10 - 2) + 1));
+        } while (map.locationHasContent(tempPoint));
+
+        return tempPoint;
     }
 
     public Color getColor() {

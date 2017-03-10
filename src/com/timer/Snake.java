@@ -89,7 +89,7 @@ public class Snake {
                 this.setGrowth(true);
                 this.score++;
             }
-            else if (this.map.checkLocation(tempPoint) instanceof SnakeSegment )
+            else if (this.map.checkLocation(tempPoint) instanceof SnakeSegment || this.map.checkLocation(tempPoint) instanceof SnakeObstacle )
             {
                 this.map.stopGame(this.score);
             }

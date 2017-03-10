@@ -9,9 +9,11 @@ import java.awt.event.KeyListener;
 public class SnakeKeyListener implements KeyListener
 {
     Snake s;
-    public SnakeKeyListener(Snake s)
+    GameField game;
+    public SnakeKeyListener(Snake s, GameField game)
     {
         this.s = s;
+        this.game = game;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class SnakeKeyListener implements KeyListener
                 break;
             case 88: System.out.println("BREAK");
                 break;
+            case 80: game.clear();
         }
     }
 

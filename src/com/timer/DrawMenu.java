@@ -22,6 +22,7 @@ class DrawMenu extends JPanel {
         g.setColor(Color.DARK_GRAY);
         g.drawString("GAME OVER", 50, 50);
         g.drawString("Score: " + score, 50, 80);
+        g.drawString("Press <p> to Play again!", 50, 110);
 
     }
 }
