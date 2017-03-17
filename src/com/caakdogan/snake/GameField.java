@@ -1,4 +1,4 @@
-package com.timer;
+package com.caakdogan.snake;
 
 import javax.swing.*;
 import java.util.Timer;
@@ -15,7 +15,7 @@ public class GameField {
     ArrayList<Fruit> fruits;
     ArrayList<SnakeObstacle> obstacles;
     ArrayList<Snake> players;
-    private Timer timer;
+    private Timer Timer;
     private JFrame f;
     private TimedDraw drawTask;
     private TimedMove moveTask;
@@ -28,14 +28,9 @@ public class GameField {
         this.map = new HashMap<Point, GameElement>();
         this.fruits = new ArrayList<Fruit>();
         this.obstacles = new ArrayList<SnakeObstacle>();
-        //Snake player1 = new Snake(new Point(100, 100), 3, Color.BLUE, this);
-        //Snake player2 = new Snake(10, 10, 50, Color.ORANGE);
-        //this.players = new ArrayList<Snake>();
-       // players.add(player1);
-
         this.canvas = new DrawPanel(players, fruits, obstacles);
         this.f = new JFrame();
-        this.timer = new java.util.Timer();
+        this.Timer = new java.util.Timer();
         this.initialize();
 
     }
@@ -50,19 +45,19 @@ public class GameField {
         }
 
         // create left side
-        for ( int i = 10; i < SnakeConfig.FIELD_HEIGHT; i += SnakeConfig.GRID_SIZE)
+        for ( int i = SnakeConfig.GRID_SIZE; i < SnakeConfig.FIELD_HEIGHT; i += SnakeConfig.GRID_SIZE)
         {
             Point tempPoint = new Point(0, i);
             this.obstacles.add(new SnakeObstacle(this, tempPoint));
         }
 
-        for ( int i = 10; i < SnakeConfig.FIELD_HEIGHT; i += SnakeConfig.GRID_SIZE)
+        for ( int i = SnakeConfig.GRID_SIZE; i < SnakeConfig.FIELD_HEIGHT; i += SnakeConfig.GRID_SIZE)
         {
             Point tempPoint = new Point(SnakeConfig.FIELD_WIDTH - SnakeConfig.GRID_SIZE, i);
             this.obstacles.add(new SnakeObstacle(this, tempPoint));
         }
 
-        for ( int i = 10; i < SnakeConfig.FIELD_WIDTH - SnakeConfig.GRID_SIZE; i += SnakeConfig.GRID_SIZE)
+        for ( int i = SnakeConfig.GRID_SIZE; i < SnakeConfig.FIELD_WIDTH - SnakeConfig.GRID_SIZE; i += SnakeConfig.GRID_SIZE)
         {
             Point tempPoint = new Point(i, SnakeConfig.FIELD_HEIGHT - SnakeConfig.GRID_SIZE);
             this.obstacles.add(new SnakeObstacle(this, tempPoint));
@@ -71,12 +66,8 @@ public class GameField {
 
     public void initialize()
     {
-
-        newFruit();
-        //Snake player1 = new Snake(new Point(100, 100), 3, Color.BLUE, this);
-        //Snake player2 = new Snake(10, 10, 50, Color.ORANGE);
         this.players = new ArrayList<Snake>();
-        players.add(new Snake(new Point(100, 100), 3, Color.BLUE, this));
+        players.add(new Snake(new Point(SnakeConfig.GRID_SIZE*3, SnakeConfig.GRID_SIZE*3), 3, Color.BLUE, this));
 
         this.canvas = new DrawPanel(players, fruits, obstacles);
         this.f.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -88,54 +79,39 @@ public class GameField {
         this.f.addKeyListener(skl);
         System.out.println("f Components:" + this.f.getRootPane().getComponentCount());
         this.createPerimeter();
+        this.newFruit();
         this.drawTask = new TimedDraw(canvas, f);
         this.moveTask = new TimedMove(players);
         //timer.schedule( drawTask, 1000, 20);
-        timer.scheduleAtFixedRate( moveTask, 1000, 120);
-        timer.scheduleAtFixedRate(drawTask, 1000, 120);
+        Timer.scheduleAtFixedRate( moveTask, 1000, 120);
+        Timer.scheduleAtFixedRate(drawTask, 1000, 20);
     }
 
     public void clear()
     {
         this.map = new HashMap<Point, GameElement>();
         this.fruits = new ArrayList<Fruit>();
-        this.timer = new java.util.Timer();
+        this.Timer = new java.util.Timer();
         this.f.remove(gameover);
         if (this.f.getKeyListeners() != null)
         {
             this.f.removeKeyListener(skl);
         }
-        //this.f.removeKeyListener(skl);
-
-        //this.f = new JFrame();
-        /*
-        while (this.f.getRootPane().getComponentCount() > 0 )
-        {
-            this.f.getRootPane().remove(0);
-        }
-        this.f.validate();*/
-
-        //ArrayList<Snake> players;
         this.initialize();
 
     }
 
+
     public void stopGame(int score)
     {
-        //System.out.println(this.drawTask.scheduledExecutionTime());
         this.drawTask.switchTaskOff();
-        this.timer.cancel();
+        this.Timer.cancel();
         this.gameover = new DrawMenu(score);
         System.out.println(f.getComponent(0));
-
         f.remove(this.canvas);
         f.add(this.gameover);
-        //f.addKeyListener(new MenuKeyListener(this));
         f.setVisible( true );
         f.repaint();
-        //restartButton.setMnemonic(KeyEvent.VK_M);
-        //Timer menuTimer = new Timer();
-        //menuTimer.schedule(new TimedDraw(gameover, f), 1000, 20);
     }
 
 

@@ -1,4 +1,4 @@
-package com.timer;
+package com.caakdogan.snake;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,9 +1,8 @@
-package com.timer;
+package com.caakdogan.snake;
 
 /**
  * Created by Arif-Admin on 03.03.2017.
  */
-import javax.swing.*;
 import java.util.TimerTask;
 import java.util.ArrayList;
 import java.util.Random;

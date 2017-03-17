@@ -1,4 +1,4 @@
-package com.timer;
+package com.caakdogan.snake;
 
 /**
  * Created by Arif-Admin on 03.03.2017.
@@ -24,33 +24,17 @@ class DrawPanel extends JPanel {
         // Draw the Snakes
         for (Snake s : this.snakes)
         {
-            g.setColor(s.getColor());
-            for (int i = 0; i < s.getNumberOfSegments(); i++)
-            {
-                Point p = s.getSegment(i);
-                g.fillRect(p.x, p.y, SnakeConfig.GRID_SIZE , SnakeConfig.GRID_SIZE );
-            }
+           s.drawSnake(g);
         }
-
         // Draw the Fruits
         for (Fruit f : this.fruits)
         {
-            g.setColor(f.getColor());
-            Point p = f.p;
-            //g.fillRect(p.x, p.y, SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
-            g.fillOval(
-                    p.x,
-                    p.y,
-                    SnakeConfig.GRID_SIZE,
-                    SnakeConfig.GRID_SIZE);
+           f.draw(g);
         }
-
         // Draw the obstacles
         for (SnakeObstacle o : this.obstacles )
         {
-            g.setColor(o.getColor());
-            Point p = o.p;
-            g.fillRect(p.x, p.y, SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
+            o.draw(g);
         }
 
     }

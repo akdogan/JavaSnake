@@ -1,4 +1,4 @@
-package com.timer;
+package com.caakdogan.snake;
 
 /**
  * Created by Arif-Admin on 03.03.2017.
@@ -32,7 +32,5 @@ class TimedDraw extends TimerTask
 
             f.repaint();
         }
-        //f.repaint();
-
     }
 }

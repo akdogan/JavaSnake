@@ -1,4 +1,4 @@
-package com.timer;
+package com.caakdogan.snake;
 
 
 /**
@@ -8,7 +8,7 @@ package com.timer;
 import java.awt.*;
 import java.util.Random;
 
-public class Fruit extends GameElement {
+public class Fruit implements GameElement {
     Point p;
     Color col;
     public Fruit(GameField map)
@@ -22,13 +22,14 @@ public class Fruit extends GameElement {
 
 
 
+
     private Point createPosition(GameField map)
     {
         Random r = new Random();
         Point tempPoint = new Point();
         do {
-            tempPoint.x = 10* (r.nextInt((SnakeConfig.FIELD_WIDTH / 10 - 2) + 1));
-            tempPoint.y = 10* (r.nextInt((SnakeConfig.FIELD_HEIGHT / 10 - 2) + 1));
+            tempPoint.x = SnakeConfig.GRID_SIZE * (r.nextInt((SnakeConfig.FIELD_WIDTH / SnakeConfig.GRID_SIZE - 2) + 1));
+            tempPoint.y = SnakeConfig.GRID_SIZE * (r.nextInt((SnakeConfig.FIELD_HEIGHT / SnakeConfig.GRID_SIZE - 2) + 1));
         } while (map.locationHasContent(tempPoint));
 
         return tempPoint;
@@ -36,5 +37,12 @@ public class Fruit extends GameElement {
 
     public Color getColor() {
         return this.col;
+    }
+
+
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(this.col);
+        g.fillOval(this.p.x, this.p.y, SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
     }
 }

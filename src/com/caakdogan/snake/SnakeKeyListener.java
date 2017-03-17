@@ -1,4 +1,4 @@
-package com.timer;
+package com.caakdogan.snake;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -39,6 +39,7 @@ public class SnakeKeyListener implements KeyListener
             case 88: System.out.println("BREAK");
                 break;
             case 80: game.clear();
+                break;
         }
     }
 

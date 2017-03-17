@@ -1,4 +1,4 @@
-package com.timer;
+package com.caakdogan.snake;
 
 /**
  * Created by Arif-Admin on 03.03.2017.
@@ -6,7 +6,6 @@ package com.timer;
 
 import java.awt.*;
 import java.util.ArrayList;
-import javax.swing.*;
 
 
 public class Snake {
@@ -47,24 +46,17 @@ public class Snake {
 
     public void moveSnake()
     {
-
         if (resetColor)
         {
             this.col = this.defaultColor;
             this.resetColor = false;
         }
-
         Point tempPoint = new Point(
                 body.get(0).p.x + this.xMovement,
                 body.get(0).p.y + this.yMovement
         );
         this.detectCollision(tempPoint);
-
-
-
         this.newSegment(tempPoint, 0);
-
-
         if (!growSnake)
         {
             this.removeSegment(body.size()-1);
@@ -72,11 +64,6 @@ public class Snake {
         else {
             this.growSnake = false;
         }
-
-
-        //body.get(0).p.x += xMovement;
-        //body.get(0).p.y += yMovement;
-        //System.out.println("Snake X: " + body.get(0).p.x);
     }
 
     private void detectCollision(Point tempPoint) {
@@ -107,9 +94,9 @@ public class Snake {
     4 : Down
     @Param direction a value between 1 and 4;
      */
-    public void changeDirection(int dir)
+    public void changeDirection(int direction)
     {
-        switch (dir)
+        switch (direction)
         {
             case LEFT:
             {
@@ -186,6 +173,15 @@ public class Snake {
     public Color getColor()
     {
         return this.col;
+    }
+
+    public void drawSnake(Graphics g)
+    {
+        g.setColor(this.col);
+        for (SnakeSegment s : body)
+        {
+            s.draw(g);
+        }
     }
 
 }

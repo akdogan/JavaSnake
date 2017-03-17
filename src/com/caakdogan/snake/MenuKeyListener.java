@@ -1,4 +1,4 @@
-package com.timer;
+package com.caakdogan.snake;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
