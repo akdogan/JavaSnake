@@ -17,7 +17,7 @@ public class SnakeConfig {
 
     // Default Colors
     public static final Color MENU_ITEM_DEFAULT_COLOR = Color.BLACK;
-    public static final Color MENU_ITEM_DEFAUL_SELECTED_COLOR = Color.RED;
+    public static final Color MENU_ITEM_DEFAULT_SELECTED_COLOR = Color.RED;
 
     public static final Color FRUIT_STANDARD_COLOR = new Color(170, 170, 170);
     public static final Color OBSTACLE_DEFAULT_COLOR = new Color(122, 122, 122);

@@ -20,33 +20,63 @@ class GamePanel extends JPanel {
     private TimedDraw drawTask; // to GamePanel
     private TimedMove moveTask; // to GamePanel
 
-    private SnakeFrame game;
+    public SnakeFrame game;
 
 
     public GamePanel(int numberOfPlayers, SnakeFrame game)
     {
         this.game = game;
         System.out.println("Starting a " + numberOfPlayers + " Player Game");
-        this.initialize();
+        this.initialize(numberOfPlayers);
     }
 
-    public void initialize()
+    public void initialize(int numberOfPlayers)
     {
         this.players = new ArrayList<Snake>();
         this.fruits = new ArrayList<Fruit>();
         this.obstacles = new ArrayList<SnakeObstacle>();
         this.map = new HashMap<Point, GameElement>();
         this.timer = new Timer();
-        Snake player1 = new Snake(new Point(SnakeConfig.GRID_SIZE* 2, SnakeConfig.GRID_SIZE * 2), Snake.RIGHT, Color.BLUE, this.map, this );
-        this.players.add(player1);
+
         this.game.skl.clearReceivers();
-        this.game.skl.addReceiver(player1);
+
+        // Add first Snake
+        this.players.add(new Snake(
+                new Point(
+                        SnakeConfig.FIELD_WIDTH - SnakeConfig.GRID_SIZE * 3,
+                        SnakeConfig.FIELD_HEIGHT - SnakeConfig.GRID_SIZE * 3),
+                Snake.LEFT,
+                SnakeConfig.PLAYER_1_DEFAULT_LEFT,
+                SnakeConfig.PLAYER_1_DEFAULT_UP,
+                SnakeConfig.PLAYER_1_DEFAULT_RIGHT,
+                SnakeConfig.PLAYER_1_DEFAULT_DOWN,
+                Color.RED,
+                "Player 1",
+                this
+        ));
+
+        // Add second Snake
+        if (numberOfPlayers > 1)
+        {
+            this.players.add(new Snake(
+                    new Point(
+                            SnakeConfig.GRID_SIZE * 2,
+                            SnakeConfig.GRID_SIZE * 2),
+                    Snake.RIGHT,
+                    SnakeConfig.PLAYER_2_DEFAULT_LEFT,
+                    SnakeConfig.PLAYER_2_DEFAULT_UP,
+                    SnakeConfig.PLAYER_2_DEFAULT_RIGHT,
+                    SnakeConfig.PLAYER_2_DEFAULT_DOWN,
+                    Color.BLUE,
+                    "Player 2",
+                    this
+            ));
+        }
 
         this.createPerimeter();
         this.newFruit();
         this.drawTask = new TimedDraw(this);
         this.moveTask = new TimedMove(players);
-        //timer.schedule( drawTask, 1000, 20);
         timer.scheduleAtFixedRate( moveTask, 1000, 120);
         timer.scheduleAtFixedRate( drawTask, 1000, 20);
     }

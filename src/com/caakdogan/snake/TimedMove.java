@@ -23,9 +23,10 @@ class TimedMove extends TimerTask
     @Override public void run()
     {
         //moveSnakeRandomly();
-        TimerSnakes.get(0).moveSnake();
-
-
+        for (Snake s : TimerSnakes)
+        {
+            s.moveSnake();
+        }
     }
 
     private void moveSnakeRandomly()

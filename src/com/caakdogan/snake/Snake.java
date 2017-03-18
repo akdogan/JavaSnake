@@ -7,14 +7,12 @@ package com.caakdogan.snake;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class Snake implements KeyReceiver,GameElement{
     private ArrayList<Point> body;
     private Color col;
     private Color defaultColor;
-    private HashMap<Point, GameElement> map;
     private int xMovement;
     private int yMovement;
     private boolean growSnake;
@@ -22,19 +20,40 @@ public class Snake implements KeyReceiver,GameElement{
     private int score;
     private GamePanel gamePanel;
 
+    public String name;
+
+    public final int leftKey;
+    public final int upKey;
+    public final int rightKey;
+    public final int downKey;
+
     public static final int LEFT = 1;
     public static final int UP = 2;
     public static final int RIGHT = 3;
     public static final int DOWN = 4;
 
-    public Snake(Point p, int dir, Color col, HashMap<Point, GameElement> map, GamePanel gamePanel)
+    public Snake(
+            Point p,
+            int dir,
+            int leftKey,
+            int upKey,
+            int rightKey,
+            int downKey,
+            Color col,
+            String name,
+            GamePanel gamePanel)
     {
         this.col = col;
         this.defaultColor = col;
-        this.map = map;
+        this.name = name;
         this.gamePanel = gamePanel;
         this.score = 0;
         body = new ArrayList<Point>();
+
+        this.leftKey = leftKey;
+        this.upKey = upKey;
+        this.rightKey = rightKey;
+        this.downKey = downKey;
 
         this.newSegment(p);
         this.growSnake = false;
@@ -42,8 +61,8 @@ public class Snake implements KeyReceiver,GameElement{
         this.xMovement = 0;
         this.yMovement = 0;
         this.changeDirection(dir);
-        this.newSegment(new Point(this.body.get(0).x - xMovement, this.body.get(0).y - yMovement ));
 
+        this.gamePanel.game.skl.addReceiver(this);
     }
 
 
@@ -71,16 +90,16 @@ public class Snake implements KeyReceiver,GameElement{
     }
 
     private void detectCollision(Point tempPoint) {
-        if (this.map.containsKey(tempPoint))
+        if (this.gamePanel.map.containsKey(tempPoint))
         {
             System.out.println("COLLISION DETECTED");
-            if (this.map.get(tempPoint) instanceof Fruit)
+            if (this.gamePanel.map.get(tempPoint) instanceof Fruit)
             {
                 this.gamePanel.removeFruit(tempPoint);
                 this.setGrowth(true);
                 this.score++;
             }
-            else if (this.map.get(tempPoint) instanceof Snake || this.map.get(tempPoint) instanceof SnakeObstacle )
+            else if (this.gamePanel.map.get(tempPoint) instanceof Snake || this.gamePanel.map.get(tempPoint) instanceof SnakeObstacle )
             {
                 this.gamePanel.stopGame(this.score);
             }
@@ -133,20 +152,20 @@ public class Snake implements KeyReceiver,GameElement{
     public void newSegment(Point p)
     {
         body.add(p);
-        this.map.put(p, this);
+        this.gamePanel.map.put(p, this);
 
     }
 
     public void newSegment(Point p, int index)
     {
         body.add(index, p);
-        this.map.put(p, this);
+        this.gamePanel.map.put(p, this);
     }
 
 
     public void removeSegment(int index)
     {
-        this.map.remove(this.body.get(index));
+        this.gamePanel.map.remove(this.body.get(index));
         this.body.remove(index);
     }
 
@@ -169,9 +188,16 @@ public class Snake implements KeyReceiver,GameElement{
     @Override
     public void reactToKey(KeyEvent e) {
         System.out.println("Snake received Key: " + e.getKeyCode());
+        int key = e.getKeyCode();
+        if ( key == leftKey )  { this.changeDirection(Snake.LEFT); }
+        if ( key == upKey )    { this.changeDirection(Snake.UP); }
+        if ( key == rightKey ) { this.changeDirection(Snake.RIGHT); }
+        if ( key == downKey )  { this.changeDirection(Snake.DOWN); }
+
+        /*
         switch(e.getKeyCode())
         {
-            case 37: this.changeDirection(Snake.LEFT);
+            case leftKey: this.changeDirection(Snake.LEFT);
                 break;
             case 38: this.changeDirection(Snake.UP);
                 break;
@@ -185,6 +211,6 @@ public class Snake implements KeyReceiver,GameElement{
                 break;
             // case 80: game.clear();
             //break;
-        }
+        }*/
     }
 }

@@ -47,7 +47,7 @@ public class MenuItemAction {
     public void select()
     {
         this.selected = true;
-        this.color = SnakeConfig.MENU_ITEM_DEFAUL_SELECTED_COLOR;
+        this.color = SnakeConfig.MENU_ITEM_DEFAULT_SELECTED_COLOR;
     }
 
     public void unSelect()
