@@ -17,4 +17,14 @@ public class SnakeConfig {
     public static final Color FRUIT_STANDARD_COLOR = new Color(170, 170, 170);
 
     public static final Color OBSTACLE_DEFAULT_COLOR = new Color(122, 122, 122);
+
+    public static final int PLAYER_1_DEFAULT_LEFT = 37;
+    public static final int PLAYER_1_DEFAULT_UP = 38;
+    public static final int PLAYER_1_DEFAULT_RIGHT = 39;
+    public static final int PLAYER_1_DEFAULT_DOWN = 40;
+
+    public static final int PLAYER_2_DEFAULT_LEFT = 65;
+    public static final int PLAYER_2_DEFAULT_UP = 87;
+    public static final int PLAYER_2_DEFAULT_RIGHT = 68;
+    public static final int PLAYER_2_DEFAULT_DOWN = 83;
 }

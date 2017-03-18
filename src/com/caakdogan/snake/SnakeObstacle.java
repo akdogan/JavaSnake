@@ -1,6 +1,7 @@
 package com.caakdogan.snake;
 
 import java.awt.*;
+import java.util.HashMap;
 
 /**
  * Created by Arif-Admin on 10.03.2017.
@@ -9,18 +10,17 @@ public class SnakeObstacle implements GameElement{
 
     Point p;
     Color col;
-    public SnakeObstacle(GameField map, Point p)
+    public SnakeObstacle(HashMap<Point, GameElement> map, Point p)
     {
         this.p = p;
         this.col = SnakeConfig.OBSTACLE_DEFAULT_COLOR;
 
-        map.addValue(this.p, this);
+        map.put(this.p, this);
     }
 
     public Color getColor()
     {
         return this.col;
-
     }
 
     @Override

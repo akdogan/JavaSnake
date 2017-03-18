@@ -6,31 +6,32 @@ package com.caakdogan.snake;
  */
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Fruit implements GameElement {
     Point p;
     Color col;
-    public Fruit(GameField map)
+    public Fruit(HashMap<Point, GameElement> map)
     {
 
-        Point tempPoint = createPosition(map);
-        this.p = tempPoint;
+
+        this.p = createPosition(map);
         this.col = SnakeConfig.FRUIT_STANDARD_COLOR;
-        map.addValue(this.p, this);
+        map.put(this.p, this);
     }
 
 
 
 
-    private Point createPosition(GameField map)
+    private Point createPosition(HashMap<Point, GameElement> map)
     {
         Random r = new Random();
         Point tempPoint = new Point();
         do {
             tempPoint.x = SnakeConfig.GRID_SIZE * (r.nextInt((SnakeConfig.FIELD_WIDTH / SnakeConfig.GRID_SIZE - 2) + 1));
             tempPoint.y = SnakeConfig.GRID_SIZE * (r.nextInt((SnakeConfig.FIELD_HEIGHT / SnakeConfig.GRID_SIZE - 2) + 1));
-        } while (map.locationHasContent(tempPoint));
+        } while (map.containsKey(tempPoint));
 
         return tempPoint;
     }

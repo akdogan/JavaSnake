@@ -9,14 +9,14 @@ import java.util.ArrayList;
 class TimedDraw extends TimerTask
 {
     JPanel screen;
-    JFrame f;
+    //JFrame f;
     boolean continueRunning;
 
-    public TimedDraw(JPanel screen, JFrame f)
+    public TimedDraw(JPanel screen)
     {
         this.screen = screen;
         this.continueRunning = true;
-        this.f = f;
+        //this.f = f;
     }
 
     public void switchTaskOff()
@@ -30,7 +30,7 @@ class TimedDraw extends TimerTask
         if (continueRunning)
         {
 
-            f.repaint();
+            screen.repaint(); /// !!!!! war vorher JFrame, geht das trotzdem?
         }
     }
 }

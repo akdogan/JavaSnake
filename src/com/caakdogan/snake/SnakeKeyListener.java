@@ -2,19 +2,51 @@ package com.caakdogan.snake;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 /**
  * Created by Arif-Admin on 03.03.2017.
  */
 public class SnakeKeyListener implements KeyListener
 {
-    Snake s;
-    GameField game;
-    public SnakeKeyListener(Snake s, GameField game)
+    ArrayList<KeyReceiver> receivers;
+    public SnakeKeyListener(KeyReceiver receiver)
     {
-        this.s = s;
-        this.game = game;
+        this.receivers = new ArrayList<KeyReceiver>();
+        this.addReceiver(receiver);
     }
+
+    public SnakeKeyListener()
+    {
+        this.receivers = new ArrayList<KeyReceiver>();
+    }
+
+    public void addReceiver(KeyReceiver newReceiver)
+    {
+        this.receivers.add(newReceiver);
+    }
+
+    public void removeReceiver(KeyReceiver receiverToRemove)
+    {
+        if (this.receivers != null && this.receivers.size() > 0)
+        {
+            for (int i = 0; i < this.receivers.size(); i++)
+            {
+                if (receivers.get(i).equals(receiverToRemove));
+                {
+                    receivers.remove(i);
+                }
+            }
+        }
+    }
+
+    public void clearReceivers()
+    {
+        this.receivers.clear();
+    }
+
+
+
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -23,23 +55,9 @@ public class SnakeKeyListener implements KeyListener
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
-        switch(e.getKeyCode())
+        for ( KeyReceiver k : receivers)
         {
-            case 37: s.changeDirection(Snake.LEFT);
-                break;
-            case 38: s.changeDirection(Snake.UP);
-                break;
-            case 39: s.changeDirection(Snake.RIGHT);
-                break;
-            case 40: s.changeDirection(Snake.DOWN);
-                break;
-            case 83: s.setGrowth(true);
-                break;
-            case 88: System.out.println("BREAK");
-                break;
-            case 80: game.clear();
-                break;
+            k.reactToKey(e);
         }
     }
 
