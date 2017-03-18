@@ -33,6 +33,6 @@ class MenuPanel extends JPanel implements KeyReceiver{
        // clearthegame
                 //reainitialize
         this.game.skl.clearReceivers();
-        this.game.startGame();
+        this.game.startGame(1);
     }
 }

@@ -26,6 +26,7 @@ class GamePanel extends JPanel {
     public GamePanel(int numberOfPlayers, SnakeFrame game)
     {
         this.game = game;
+        System.out.println("Starting a " + numberOfPlayers + " Player Game");
         this.initialize();
     }
 
@@ -38,6 +39,7 @@ class GamePanel extends JPanel {
         this.timer = new Timer();
         Snake player1 = new Snake(new Point(SnakeConfig.GRID_SIZE* 2, SnakeConfig.GRID_SIZE * 2), Snake.RIGHT, Color.BLUE, this.map, this );
         this.players.add(player1);
+        this.game.skl.clearReceivers();
         this.game.skl.addReceiver(player1);
 
         this.createPerimeter();
@@ -110,11 +112,6 @@ class GamePanel extends JPanel {
             this.obstacles.add(new SnakeObstacle(this.map, tempPoint));
         }
     }
-
-
-
-
-
 
 
     public void newFruit()

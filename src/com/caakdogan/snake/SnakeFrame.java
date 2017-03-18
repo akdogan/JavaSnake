@@ -9,6 +9,7 @@ public class SnakeFrame extends JFrame {
 
     private GamePanel gamePanel; //before canvas
     private MenuPanel gameover;
+    private MainMenuPanel mainMenuPanel;
     public SnakeKeyListener skl; // to main, should be attached to SnakeFrame
     private JPanel currentPanel;
 
@@ -16,13 +17,21 @@ public class SnakeFrame extends JFrame {
     {
         this.skl = skl;
         this.addKeyListener(skl);
-        this.startGame();
+        this.startMenu();
 
     }
 
-    public void startGame()
+    public void startMenu()
     {
-        this.gamePanel = new GamePanel(1, this);
+        this.mainMenuPanel = new MainMenuPanel(this);
+        this.addNewPanel(mainMenuPanel);
+        System.out.println("MainMenuPanel added");
+    }
+
+
+    public void startGame(int numberOfPlayers)
+    {
+        this.gamePanel = new GamePanel(numberOfPlayers, this);
         this.addNewPanel(gamePanel);
         System.out.println("gamePanel added");
     }
