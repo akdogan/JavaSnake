@@ -1,14 +1,16 @@
 package com.caakdogan.snake;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
- * Created by Arif-Admin on 17.03.2017.
+ * Created by Arif Akdogan on 17.03.2017.
+ * This is the main Window in which the menu and game is displyed.
+ * Also responsible for all wrapping logic like starting the game and displaying the menu after game over
  */
-public class SnakeFrame extends JFrame {
+class SnakeFrame extends JFrame {
 
     private GamePanel gamePanel; //before canvas
-    private MenuPanel gameover;
     private MainMenuPanel mainMenuPanel;
     public SnakeKeyListener skl; // to main, should be attached to SnakeFrame
     private JPanel currentPanel;
@@ -17,13 +19,14 @@ public class SnakeFrame extends JFrame {
     {
         this.skl = skl;
         this.addKeyListener(skl);
-        this.startMenu();
+        ArrayList<String> labels = new ArrayList<String>();
+        this.startMenu("Java Snakes", labels);
 
     }
 
-    public void startMenu()
+    public void startMenu(String heading, ArrayList<String> labels)
     {
-        this.mainMenuPanel = new MainMenuPanel(this);
+        this.mainMenuPanel = new MainMenuPanel(this, heading, labels );
         this.addNewPanel(mainMenuPanel);
         System.out.println("MainMenuPanel added");
     }
@@ -36,29 +39,12 @@ public class SnakeFrame extends JFrame {
         System.out.println("gamePanel added");
     }
 
-    public void stopGame(int score)
+    public void stopGame(ArrayList<String> scores)
     {
         System.out.println(this.getComponent(0));
-        this.gameover = new MenuPanel(score, this);
-        this.addNewPanel(this.gameover);
-        this.skl.clearReceivers();
-        this.skl.addReceiver(gameover);
-        this.gamePanel = null;
+        this.startMenu("Game Over", scores);
+
     }
-
-    /*public void clearGame()
-    {
-        this.map = new HashMap<Point, GameElement>();
-        this.fruits = new ArrayList<Fruit>();
-        this.Timer = new java.util.Timer();
-        this.f.remove(gameover);
-        if (this.f.getKeyListeners() != null)
-        {
-            this.f.removeKeyListener(skl);
-        }
-        this.initialize();
-
-    }*/
 
     private void addNewPanel(JPanel newPanel)
     {

@@ -13,11 +13,12 @@ public class Snake implements KeyReceiver,GameElement{
     private ArrayList<Point> body;
     private Color col;
     private Color defaultColor;
+    private int currentDirection;
     private int xMovement;
     private int yMovement;
     private boolean growSnake;
     private boolean resetColor;
-    private int score;
+    public int score;
     private GamePanel gamePanel;
 
     public String name;
@@ -101,7 +102,7 @@ public class Snake implements KeyReceiver,GameElement{
             }
             else if (this.gamePanel.map.get(tempPoint) instanceof Snake || this.gamePanel.map.get(tempPoint) instanceof SnakeObstacle )
             {
-                this.gamePanel.stopGame(this.score);
+                this.gamePanel.stopGame();
             }
 
             this.col = new Color(25, 192, 229);
@@ -110,43 +111,51 @@ public class Snake implements KeyReceiver,GameElement{
     }
 
     /*
-    Changes the direction if the Snake like this:
-    1 : Left
-    2 : Up
-    3 : Right
-    4 : Down
-    @Param direction a value between 1 and 4;
+    Changes the direction of the snake
+    @Param direction a value between 1 and 4 of LEFT, UP, RIGHT, DOWN
      */
     public void changeDirection(int direction)
     {
-        switch (direction)
+        if ( direction != this.getOppositeDirection(this.currentDirection))
         {
-            case LEFT:
-            {
-                this.xMovement = 0 - SnakeConfig.GRID_SIZE;
-                this.yMovement = 0;
+            switch (direction) {
+                case LEFT: {
+                    this.xMovement = 0 - SnakeConfig.GRID_SIZE;
+                    this.yMovement = 0;
+                }
+                break;
+                case UP: {
+                    this.xMovement = 0;
+                    this.yMovement = 0 - SnakeConfig.GRID_SIZE;
+                }
+                break;
+                case RIGHT: {
+                    this.xMovement = SnakeConfig.GRID_SIZE;
+                    this.yMovement = 0;
+                }
+                break;
+                case DOWN: {
+                    this.xMovement = 0;
+                    this.yMovement = SnakeConfig.GRID_SIZE;
+                }
+                break;
             }
-            break;
-            case UP:
-            {
-                this.xMovement = 0;
-                this.yMovement = 0 - SnakeConfig.GRID_SIZE;
-            }
-            break;
-            case RIGHT:
-            {
-                this.xMovement = SnakeConfig.GRID_SIZE;
-                this.yMovement = 0;
-            }
-            break;
-            case DOWN:
-            {
-                this.xMovement = 0;
-                this.yMovement = SnakeConfig.GRID_SIZE;
-            }
-            break;
+            this.currentDirection = direction;
         }
-       // System.out.println("DIR: " + dir + " | " + "x-dir: " + xMovement + " | y-dir: " + yMovement);
+
+    }
+
+    public int getOppositeDirection(int direction)
+    {
+        for (int i = 1; i <= 2; i++)
+        {
+            direction += 1;
+            if (direction >= 5)
+            {
+                direction = 1;
+            }
+        }
+        return direction;
     }
 
     public void newSegment(Point p)
@@ -169,6 +178,11 @@ public class Snake implements KeyReceiver,GameElement{
         this.body.remove(index);
     }
 
+    public int getNumberOfSegments()
+    {
+        return this.body.size();
+    }
+
 
     public void setGrowth(boolean b)
     {
@@ -179,9 +193,9 @@ public class Snake implements KeyReceiver,GameElement{
     public void draw(Graphics g)
     {
         g.setColor(this.col);
-        for (Point p : body)
+        for (int i = 0; i < this.body.size(); i++ )
         {
-            g.fillRect(p.x, p.y, SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
+            g.fillRect(this.body.get(i).x, this.body.get(i).y, SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
         }
     }
 
@@ -194,23 +208,5 @@ public class Snake implements KeyReceiver,GameElement{
         if ( key == rightKey ) { this.changeDirection(Snake.RIGHT); }
         if ( key == downKey )  { this.changeDirection(Snake.DOWN); }
 
-        /*
-        switch(e.getKeyCode())
-        {
-            case leftKey: this.changeDirection(Snake.LEFT);
-                break;
-            case 38: this.changeDirection(Snake.UP);
-                break;
-            case 39: this.changeDirection(Snake.RIGHT);
-                break;
-            case 40: this.changeDirection(Snake.DOWN);
-                break;
-            case 83: this.setGrowth(true);
-                break;
-            case 88: System.out.println("BREAK");
-                break;
-            // case 80: game.clear();
-            //break;
-        }*/
     }
 }

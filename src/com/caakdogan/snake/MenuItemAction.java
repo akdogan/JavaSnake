@@ -1,17 +1,17 @@
 package com.caakdogan.snake;
 
 import java.awt.*;
-import java.awt.MenuItem;
 
 /**
  * Created by Arif-Admin on 17.03.2017.
  */
-public class MenuItemAction {
+public class MenuItemAction implements MenuItem{
 
-    public String label;
-    public boolean selected;
-    public Color color;
-    public int selector;
+    private String label;
+    private boolean selected;
+    private Color color;
+    private Font font;
+    private int selector;
 
     public MenuItemAction(String label, int selector, boolean selected)
     {
@@ -22,6 +22,7 @@ public class MenuItemAction {
         {
             this.select();
         }
+        this.font = (new Font(Font.SANS_SERIF, Font.BOLD, 20));
     }
 
     public MenuItemAction(String label, int selector)

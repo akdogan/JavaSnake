@@ -6,21 +6,32 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
- * Created by Arif-Admin on 05.03.2017.
+ * Created by Arif Akdogan on 05.03.2017.
+ * Controls the logic of the main menu
+ * Needs to be split later if Menu should have depth > 1
  */
 class MainMenuPanel extends JPanel implements KeyReceiver{
-    ArrayList<MenuItemAction> menuItems;
-    int selectedItem;
+    private ArrayList<MenuItem> menuItems;
+    private ArrayList<MenuItemLabel> labels;
+    private int selectedItem;
     private SnakeFrame game;
-    Font font;
+    private String heading;
 
 
-    public MainMenuPanel(SnakeFrame game){
-        menuItems = new ArrayList<MenuItemAction>();
+
+    public MainMenuPanel(SnakeFrame game, String heading, ArrayList<String> labels){
+        this.heading = heading;
+        menuItems = new ArrayList<>();
+        this.labels = new ArrayList<>();
         menuItems.add(new MenuItemAction("1 Player Game", 1, true));
         menuItems.add(new MenuItemAction("2 Player Game", 2));
         int selectedItem = 0;
-        font = new Font(Font.SANS_SERIF, Font.BOLD, 20);
+
+        for (String label : labels)
+        {
+            this.labels.add(new MenuItemLabel(label));
+        }
+
         this.game = game;
         game.skl.clearReceivers();
         game.skl.addReceiver(this);
@@ -31,16 +42,28 @@ class MainMenuPanel extends JPanel implements KeyReceiver{
     {
         super.paintComponent(g);
         int y = 50;
-        setFont(font);
-        for ( MenuItemAction m : menuItems)
+        setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        g.setColor(Color.DARK_GRAY);
+        g.drawString(this.heading, 50, y);
+        y += 60;
+        for ( MenuItem m : menuItems)
         {
+
             g.setColor(m.getColor());
             g.drawString(m.getLabel(), 50, y);
             y += 30;
         }
+        y += 30;
+        g.setColor(Color.DARK_GRAY);
+
+        for ( MenuItemLabel l : labels)
+        {
+            g.drawString(l.getLabel(), 50, y);
+            y += 30;
+        }
     }
 
-    public void navigate(boolean navigateUp)
+    private void navigate(boolean navigateUp)
     {
         int direction;
 
@@ -80,19 +103,10 @@ class MainMenuPanel extends JPanel implements KeyReceiver{
             case 10: this.game.startGame(menuItems.get(selectedItem).performAction());
                 break;
             case 38: this.navigate(true);
-                break;/*
-            case 39: s.changeDirection(Snake.RIGHT);
-                break;*/
+                break;
             case 40: this.navigate(false);
-                break;/*
-            case 83: s.setGrowth(true);
                 break;
-            case 88: System.out.println("BREAK");
-                break;
-            case 80: game.clear();
-                break;
-            case 89: game.increaseSpeed();
-                break;*/
+
         }
     }
 }

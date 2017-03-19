@@ -9,7 +9,7 @@ public class Main {
 
 		SnakeKeyListener skl = new SnakeKeyListener();
 		SnakeFrame game = new SnakeFrame(skl);
-		game.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+		game.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
 		game.setSize( SnakeConfig.WINDOW_WIDTH, SnakeConfig.WINDOW_HEIGHT );
 		game.setVisible(true);
 	}

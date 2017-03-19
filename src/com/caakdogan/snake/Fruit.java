@@ -1,27 +1,26 @@
 package com.caakdogan.snake;
 
-
-/**
- * Created by Arif-Admin on 03.03.2017.
- */
-
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Random;
 
+
+/**
+ * Created by Arif Akdogan on 03.03.2017.
+ * Class for single Fruit
+ */
+
+
 public class Fruit implements GameElement {
     Point p;
-    Color col;
-    public Fruit(HashMap<Point, GameElement> map)
+    private Color col;
+
+    Fruit(HashMap<Point, GameElement> map)
     {
-
-
         this.p = createPosition(map);
         this.col = SnakeConfig.FRUIT_STANDARD_COLOR;
         map.put(this.p, this);
     }
-
-
 
 
     private Point createPosition(HashMap<Point, GameElement> map)
@@ -35,11 +34,6 @@ public class Fruit implements GameElement {
 
         return tempPoint;
     }
-
-    public Color getColor() {
-        return this.col;
-    }
-
 
     @Override
     public void draw(Graphics g) {

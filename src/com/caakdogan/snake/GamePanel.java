@@ -1,18 +1,19 @@
 package com.caakdogan.snake;
 
-/**
- * Created by Arif-Admin on 03.03.2017.
- */
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
 import java.awt.Point;
 import java.util.Timer;
 
+/**
+ * Created by Arif Akdogan on 03.03.2017.
+ * Extended JPanel that's responsible for drawing and managing all Elements during the actual Game
+ */
 class GamePanel extends JPanel {
-    ArrayList<Snake> players;
-    ArrayList<Fruit> fruits;
-    ArrayList<SnakeObstacle> obstacles;
+    private ArrayList<Snake> players;
+    private ArrayList<Fruit> fruits;
+    private ArrayList<SnakeObstacle> obstacles;
 
     HashMap<Point, GameElement> map;
 
@@ -28,14 +29,15 @@ class GamePanel extends JPanel {
         this.game = game;
         System.out.println("Starting a " + numberOfPlayers + " Player Game");
         this.initialize(numberOfPlayers);
+        this.game.setSize(SnakeConfig.WINDOW_WIDTH, SnakeConfig.WINDOW_HEIGHT + ( numberOfPlayers * SnakeConfig.HUD_HEIGHT_PER_LABEL));
     }
 
-    public void initialize(int numberOfPlayers)
+    private void initialize(int numberOfPlayers)
     {
-        this.players = new ArrayList<Snake>();
-        this.fruits = new ArrayList<Fruit>();
-        this.obstacles = new ArrayList<SnakeObstacle>();
-        this.map = new HashMap<Point, GameElement>();
+        this.players = new ArrayList<>();
+        this.fruits = new ArrayList<>();
+        this.obstacles = new ArrayList<>();
+        this.map = new HashMap<>();
         this.timer = new Timer();
 
         this.game.skl.clearReceivers();
@@ -82,24 +84,35 @@ class GamePanel extends JPanel {
     }
 
 
-
-
-    public void stopGame(int score)
+    public void stopGame()
     {
         this.drawTask.switchTaskOff();
         this.timer.cancel();
         System.out.println("Game Stopped");
-        this.game.stopGame(score);
+        ArrayList<String> scores = new ArrayList<>();
+        for (int i = 0; i < players.size(); i++)
+        {
+            String str = players.get(i).name + ": " + players.get(i).score + " Points";
+            scores.add(str);
+        }
+        this.game.stopGame(scores);
     }
 
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Draw the Snakes
+        g.setColor(Color.DARK_GRAY);
+        g.setFont(SnakeConfig.HUD_FONT);
+
+        int y = SnakeConfig.FIELD_HEIGHT ;
+        int x = 5;
+
         for (Snake s : this.players)
         {
            s.draw(g);
+           y += SnakeConfig.HUD_HEIGHT_PER_LABEL - 5;
+           g.drawString(s.name + " score: " + s.score, x, y);
         }
         // Draw the Fruits
         for (Fruit f : this.fruits)
@@ -111,10 +124,9 @@ class GamePanel extends JPanel {
         {
             o.draw(g);
         }
-
     }
 
-    public void createPerimeter()
+    private void createPerimeter()
     {
         // create top row
         for (int i = 0; i < SnakeConfig.FIELD_WIDTH; i += SnakeConfig.GRID_SIZE)
@@ -122,20 +134,17 @@ class GamePanel extends JPanel {
             Point tempPoint = new Point(i, 0);
             this.obstacles.add(new SnakeObstacle(this.map, tempPoint));
         }
-
         // create left side
         for ( int i = SnakeConfig.GRID_SIZE; i < SnakeConfig.FIELD_HEIGHT; i += SnakeConfig.GRID_SIZE)
         {
             Point tempPoint = new Point(0, i);
             this.obstacles.add(new SnakeObstacle(this.map, tempPoint));
         }
-
         for ( int i = SnakeConfig.GRID_SIZE; i < SnakeConfig.FIELD_HEIGHT; i += SnakeConfig.GRID_SIZE)
         {
             Point tempPoint = new Point(SnakeConfig.FIELD_WIDTH - SnakeConfig.GRID_SIZE, i);
             this.obstacles.add(new SnakeObstacle(this.map, tempPoint));
         }
-
         for ( int i = SnakeConfig.GRID_SIZE; i < SnakeConfig.FIELD_WIDTH - SnakeConfig.GRID_SIZE; i += SnakeConfig.GRID_SIZE)
         {
             Point tempPoint = new Point(i, SnakeConfig.FIELD_HEIGHT - SnakeConfig.GRID_SIZE);
@@ -144,7 +153,7 @@ class GamePanel extends JPanel {
     }
 
 
-    public void newFruit()
+    private void newFruit()
     {
         fruits.add(new Fruit(this.map));
     }

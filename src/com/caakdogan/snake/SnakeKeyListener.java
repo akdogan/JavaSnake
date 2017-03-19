@@ -55,9 +55,9 @@ public class SnakeKeyListener implements KeyListener
 
     @Override
     public void keyPressed(KeyEvent e) {
-        for ( KeyReceiver k : receivers)
+        for (int i = 0; i < receivers.size(); i++)
         {
-            k.reactToKey(e);
+            receivers.get(i).reactToKey(e);
         }
     }
 

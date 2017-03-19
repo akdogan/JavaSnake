@@ -3,7 +3,8 @@ package com.caakdogan.snake;
 import java.awt.*;
 
 /**
- * Created by Arif-Admin on 15.03.2017.
+ * Created by Arif Akdogan on 15.03.2017.
+ * Class to abstract the Grid from the actual pixels
  */
 public class GridPoint extends Point {
 
