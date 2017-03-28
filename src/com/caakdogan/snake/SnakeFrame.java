@@ -1,6 +1,7 @@
 package com.caakdogan.snake;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -15,13 +16,13 @@ class SnakeFrame extends JFrame {
     public SnakeKeyListener skl; // to main, should be attached to SnakeFrame
     private JPanel currentPanel;
 
+
     public SnakeFrame(SnakeKeyListener skl)
     {
         this.skl = skl;
         this.addKeyListener(skl);
         ArrayList<String> labels = new ArrayList<String>();
         this.startMenu("Java Snakes", labels);
-
     }
 
     public void startMenu(String heading, ArrayList<String> labels)
@@ -32,9 +33,9 @@ class SnakeFrame extends JFrame {
     }
 
 
-    public void startGame(int numberOfPlayers)
+    public void startGame(int numberOfPlayers, int speed, Color p1, Color p2)
     {
-        this.gamePanel = new GamePanel(numberOfPlayers, this);
+        this.gamePanel = new GamePanel(numberOfPlayers, speed, this, p1, p2);
         this.addNewPanel(gamePanel);
         System.out.println("gamePanel added");
     }
@@ -57,9 +58,5 @@ class SnakeFrame extends JFrame {
         this.setVisible( true );
         this.repaint();
     }
-
-
-
-
 
 }

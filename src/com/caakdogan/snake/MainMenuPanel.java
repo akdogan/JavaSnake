@@ -17,24 +17,64 @@ class MainMenuPanel extends JPanel implements KeyReceiver{
     private SnakeFrame game;
     private String heading;
 
+    public Color p1;
+    private Color p2;
+    public Integer speed;
 
 
     public MainMenuPanel(SnakeFrame game, String heading, ArrayList<String> labels){
         this.heading = heading;
         menuItems = new ArrayList<>();
         this.labels = new ArrayList<>();
-        menuItems.add(new MenuItemAction("1 Player Game", 1, true));
-        menuItems.add(new MenuItemAction("2 Player Game", 2));
-        int selectedItem = 0;
+        this.game = game;
+        menuItems.add(new MenuItemStartGame("1 Player Game", true, 1, this));
+        menuItems.add(new MenuItemStartGame("2 Player Game", false, 2, this));
+        ArrayList<Integer> speedSelection = new  ArrayList<Integer>();
+        speedSelection.add(160);
+        speedSelection.add(130);
+        speedSelection.add(100);
+        speedSelection.add(70);
+        speedSelection.add(40);
+        //int[] speed = {0, 1, 2, 3, 4, 5};
+        menuItems.add(new MenuItemSelection( "Select Speed: ", false, speedSelection, 2, this.speed, this));
+        //Colors
+        this.p2 = Color.RED;
+        menuItems.add(new MenuItemSelectionColor(
+                "Player 1 Color:",
+                false,
+                getListOfColors(),
+                this
+        ));
+
+
+        this.selectedItem = 0;
 
         for (String label : labels)
         {
             this.labels.add(new MenuItemLabel(label));
         }
 
-        this.game = game;
+
         game.skl.clearReceivers();
         game.skl.addReceiver(this);
+    }
+
+    public void startGame(int numberOfPlayers){
+        System.out.println("!!MainMenuPanel:" + speed);
+        // Hier die benötigten Werte einfach aus dem MenuItem rausziehen;
+        // Werte können dann innerhalb der MenuItems hinterlegt werden.
+        this.game.startGame(numberOfPlayers, (Integer)this.speed, this.p1, this.p2);
+
+    }
+
+    private ArrayList<Color> getListOfColors(){
+        ArrayList<Color> temp = new ArrayList<Color>();
+        temp.add(Color.BLUE);
+        temp.add(Color.CYAN);
+        temp.add(Color.RED);
+        temp.add(Color.MAGENTA);
+        temp.add(Color.GREEN);
+        return temp;
     }
 
     @Override
@@ -48,9 +88,7 @@ class MainMenuPanel extends JPanel implements KeyReceiver{
         y += 60;
         for ( MenuItem m : menuItems)
         {
-
-            g.setColor(m.getColor());
-            g.drawString(m.getLabel(), 50, y);
+            m.draw(50, y, g);
             y += 30;
         }
         y += 30;
@@ -97,16 +135,17 @@ class MainMenuPanel extends JPanel implements KeyReceiver{
 
     public void reactToKey(KeyEvent e)
     {
-        System.out.println(e.getKeyCode());
-        switch (e.getKeyCode())
-        {
-            case 10: this.game.startGame(menuItems.get(selectedItem).performAction());
-                break;
-            case 38: this.navigate(true);
-                break;
-            case 40: this.navigate(false);
-                break;
-
+        int key = e.getKeyCode();
+        if (key == 38) {
+            this.navigate(true);
         }
+        else if (key == 40) {
+            this.navigate(false);
+        }
+        else {
+            this.menuItems.get(selectedItem).performAction(key);
+            this.repaint();
+        }
+
     }
 }

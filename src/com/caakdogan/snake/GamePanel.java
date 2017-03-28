@@ -24,15 +24,16 @@ class GamePanel extends JPanel {
     public SnakeFrame game;
 
 
-    public GamePanel(int numberOfPlayers, SnakeFrame game)
+    public GamePanel(int numberOfPlayers, int speed, SnakeFrame game, Color p1, Color p2)
     {
         this.game = game;
         System.out.println("Starting a " + numberOfPlayers + " Player Game");
-        this.initialize(numberOfPlayers);
+        this.initialize(numberOfPlayers, speed, p1, p2);
         this.game.setSize(SnakeConfig.WINDOW_WIDTH, SnakeConfig.WINDOW_HEIGHT + ( numberOfPlayers * SnakeConfig.HUD_HEIGHT_PER_LABEL));
     }
 
-    private void initialize(int numberOfPlayers)
+    // TODO: initialize() probably not necessary, can go into constructor
+    private void initialize(int numberOfPlayers, int speed, Color p1, Color p2)
     {
         this.players = new ArrayList<>();
         this.fruits = new ArrayList<>();
@@ -52,7 +53,7 @@ class GamePanel extends JPanel {
                 SnakeConfig.PLAYER_1_DEFAULT_UP,
                 SnakeConfig.PLAYER_1_DEFAULT_RIGHT,
                 SnakeConfig.PLAYER_1_DEFAULT_DOWN,
-                Color.RED,
+                p1,
                 "Player 1",
                 this
         ));
@@ -69,7 +70,7 @@ class GamePanel extends JPanel {
                     SnakeConfig.PLAYER_2_DEFAULT_UP,
                     SnakeConfig.PLAYER_2_DEFAULT_RIGHT,
                     SnakeConfig.PLAYER_2_DEFAULT_DOWN,
-                    Color.BLUE,
+                    p2,
                     "Player 2",
                     this
             ));
@@ -79,7 +80,7 @@ class GamePanel extends JPanel {
         this.newFruit();
         this.drawTask = new TimedDraw(this);
         this.moveTask = new TimedMove(players);
-        timer.scheduleAtFixedRate( moveTask, 1000, 120);
+        timer.scheduleAtFixedRate( moveTask, 1000, speed);
         timer.scheduleAtFixedRate( drawTask, 1000, 20);
     }
 

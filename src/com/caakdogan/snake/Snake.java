@@ -49,7 +49,7 @@ public class Snake implements KeyReceiver,GameElement{
         this.name = name;
         this.gamePanel = gamePanel;
         this.score = 0;
-        body = new ArrayList<Point>();
+        body = new ArrayList<>();
 
         this.leftKey = leftKey;
         this.upKey = upKey;
@@ -110,10 +110,10 @@ public class Snake implements KeyReceiver,GameElement{
         }
     }
 
-    /*
-    Changes the direction of the snake
-    @Param direction a value between 1 and 4 of LEFT, UP, RIGHT, DOWN
-     */
+    /**
+    * Changes the direction of the snake
+    * @Param direction a value between 1 and 4 of LEFT, UP, RIGHT, DOWN
+    */
     public void changeDirection(int direction)
     {
         if ( direction != this.getOppositeDirection(this.currentDirection))
