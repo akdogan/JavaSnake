@@ -8,6 +8,13 @@ import java.awt.*;
  */
 public class GridPoint extends Point {
 
+    public GridPoint(int x, int y){
+        super(x, y);
+    }
+
+    public GridPoint(){
+        super();
+    }
 
     public Point getCanvasPoint()
     {

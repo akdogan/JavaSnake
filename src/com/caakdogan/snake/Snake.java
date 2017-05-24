@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 
 public class Snake implements KeyReceiver,GameElement{
-    private ArrayList<Point> body;
+    private ArrayList<GridPoint> body;
     private Color col;
     private Color defaultColor;
     private int currentDirection;
@@ -18,6 +18,7 @@ public class Snake implements KeyReceiver,GameElement{
     private int yMovement;
     private boolean growSnake;
     private boolean resetColor;
+    private boolean pause;
     public int score;
     private GamePanel gamePanel;
 
@@ -34,7 +35,7 @@ public class Snake implements KeyReceiver,GameElement{
     public static final int DOWN = 4;
 
     public Snake(
-            Point p,
+            GridPoint p,
             int dir,
             int leftKey,
             int upKey,
@@ -64,6 +65,8 @@ public class Snake implements KeyReceiver,GameElement{
         this.changeDirection(dir);
 
         this.gamePanel.game.skl.addReceiver(this);
+
+        this.pause = false;
     }
 
 
@@ -75,11 +78,34 @@ public class Snake implements KeyReceiver,GameElement{
             this.col = this.defaultColor;
             this.resetColor = false;
         }
-        Point tempPoint = new Point(
+        GridPoint tempPoint = new GridPoint(
                 body.get(0).x + this.xMovement,
                 body.get(0).y + this.yMovement
         );
-        this.detectCollision(tempPoint);
+        // Check for overflow
+
+
+        if (tempPoint.x > SnakeConfig.FIELD_WIDTH)
+        {
+            tempPoint.x = 0;
+        }
+        if (tempPoint.x < 0)
+        {
+            tempPoint.x = SnakeConfig.FIELD_WIDTH;
+        }
+        if (tempPoint.y > SnakeConfig.FIELD_HEIGHT)
+        {
+            tempPoint.y = 0;
+        }
+        if (tempPoint.y < 0)
+        {
+            tempPoint.y = SnakeConfig.FIELD_HEIGHT;
+        }
+
+        if (!pause){
+            this.detectCollision(tempPoint);
+        }
+
         this.newSegment(tempPoint, 0);
         if (!growSnake)
         {
@@ -90,10 +116,12 @@ public class Snake implements KeyReceiver,GameElement{
         }
     }
 
-    private void detectCollision(Point tempPoint) {
+
+
+    private void detectCollision(GridPoint tempPoint) {
         if (this.gamePanel.map.containsKey(tempPoint))
         {
-            System.out.println("COLLISION DETECTED");
+            //System.out.println("COLLISION DETECTED");
             if (this.gamePanel.map.get(tempPoint) instanceof Fruit)
             {
                 this.gamePanel.removeFruit(tempPoint);
@@ -120,23 +148,23 @@ public class Snake implements KeyReceiver,GameElement{
         {
             switch (direction) {
                 case LEFT: {
-                    this.xMovement = 0 - SnakeConfig.GRID_SIZE;
+                    this.xMovement = -1;
                     this.yMovement = 0;
                 }
                 break;
                 case UP: {
                     this.xMovement = 0;
-                    this.yMovement = 0 - SnakeConfig.GRID_SIZE;
+                    this.yMovement = -1;
                 }
                 break;
                 case RIGHT: {
-                    this.xMovement = SnakeConfig.GRID_SIZE;
+                    this.xMovement = 1;
                     this.yMovement = 0;
                 }
                 break;
                 case DOWN: {
                     this.xMovement = 0;
-                    this.yMovement = SnakeConfig.GRID_SIZE;
+                    this.yMovement = 1;
                 }
                 break;
             }
@@ -158,14 +186,14 @@ public class Snake implements KeyReceiver,GameElement{
         return direction;
     }
 
-    public void newSegment(Point p)
+    public void newSegment(GridPoint p)
     {
         body.add(p);
         this.gamePanel.map.put(p, this);
 
     }
 
-    public void newSegment(Point p, int index)
+    public void newSegment(GridPoint p, int index)
     {
         body.add(index, p);
         this.gamePanel.map.put(p, this);
@@ -195,18 +223,24 @@ public class Snake implements KeyReceiver,GameElement{
         g.setColor(this.col);
         for (int i = 0; i < this.body.size(); i++ )
         {
-            g.fillRect(this.body.get(i).x, this.body.get(i).y, SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
+            g.fillRect(this.body.get(i).getCanvasX(), this.body.get(i).getCanvasY(), SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
         }
     }
 
     @Override
     public void reactToKey(KeyEvent e) {
+        if (pause) {pause = false;}
         System.out.println("Snake received Key: " + e.getKeyCode());
         int key = e.getKeyCode();
         if ( key == leftKey )  { this.changeDirection(Snake.LEFT); }
         if ( key == upKey )    { this.changeDirection(Snake.UP); }
         if ( key == rightKey ) { this.changeDirection(Snake.RIGHT); }
         if ( key == downKey )  { this.changeDirection(Snake.DOWN); }
+        if ( key == 32) {
+            this.xMovement = 0;
+            this.yMovement = 0;
+            pause = true;
+        }
 
     }
 }

@@ -15,7 +15,7 @@ class GamePanel extends JPanel {
     private ArrayList<Fruit> fruits;
     private ArrayList<SnakeObstacle> obstacles;
 
-    HashMap<Point, GameElement> map;
+    HashMap<GridPoint, GameElement> map;
 
     private Timer timer;
     private TimedDraw drawTask; // to GamePanel
@@ -29,7 +29,7 @@ class GamePanel extends JPanel {
         this.game = game;
         System.out.println("Starting a " + numberOfPlayers + " Player Game");
         this.initialize(numberOfPlayers, speed, p1, p2);
-        this.game.setSize(SnakeConfig.WINDOW_WIDTH, SnakeConfig.WINDOW_HEIGHT + ( numberOfPlayers * SnakeConfig.HUD_HEIGHT_PER_LABEL));
+        this.game.setSize(SnakeConfig.WINDOW_WIDTH, SnakeConfig.WINDOW_HEIGHT + ( numberOfPlayers * SnakeConfig.MENU_BLOCK_HEIGHT));
     }
 
     // TODO: initialize() probably not necessary, can go into constructor
@@ -42,12 +42,12 @@ class GamePanel extends JPanel {
         this.timer = new Timer();
 
         this.game.skl.clearReceivers();
-
+        GridPoint p = new GridPoint(10, 10);
         // Add first Snake
         this.players.add(new Snake(
-                new Point(
-                        SnakeConfig.FIELD_WIDTH - SnakeConfig.GRID_SIZE * 3,
-                        SnakeConfig.FIELD_HEIGHT - SnakeConfig.GRID_SIZE * 3),
+                new GridPoint(
+                        SnakeConfig.FIELD_WIDTH - 3,
+                        SnakeConfig.FIELD_HEIGHT - 3),
                 Snake.LEFT,
                 SnakeConfig.PLAYER_1_DEFAULT_LEFT,
                 SnakeConfig.PLAYER_1_DEFAULT_UP,
@@ -62,9 +62,7 @@ class GamePanel extends JPanel {
         if (numberOfPlayers > 1)
         {
             this.players.add(new Snake(
-                    new Point(
-                            SnakeConfig.GRID_SIZE * 2,
-                            SnakeConfig.GRID_SIZE * 2),
+                    new GridPoint(2, 2),
                     Snake.RIGHT,
                     SnakeConfig.PLAYER_2_DEFAULT_LEFT,
                     SnakeConfig.PLAYER_2_DEFAULT_UP,
@@ -76,7 +74,9 @@ class GamePanel extends JPanel {
             ));
         }
 
-        this.createPerimeter();
+        LevelGenerator levGen = new LevelGenerator(map);
+        this.obstacles = levGen.generateLevel(0);
+
         this.newFruit();
         this.drawTask = new TimedDraw(this);
         this.moveTask = new TimedMove(players);
@@ -106,13 +106,13 @@ class GamePanel extends JPanel {
         g.setColor(Color.DARK_GRAY);
         g.setFont(SnakeConfig.HUD_FONT);
 
-        int y = SnakeConfig.FIELD_HEIGHT ;
+        int y = SnakeConfig.CANVAS_HEIGHT ;
         int x = 5;
 
         for (Snake s : this.players)
         {
            s.draw(g);
-           y += SnakeConfig.HUD_HEIGHT_PER_LABEL - 5;
+           y += SnakeConfig.MENU_BLOCK_HEIGHT - 5;
            g.drawString(s.name + " score: " + s.score, x, y);
         }
         // Draw the Fruits
@@ -127,39 +127,12 @@ class GamePanel extends JPanel {
         }
     }
 
-    private void createPerimeter()
-    {
-        // create top row
-        for (int i = 0; i < SnakeConfig.FIELD_WIDTH; i += SnakeConfig.GRID_SIZE)
-        {
-            Point tempPoint = new Point(i, 0);
-            this.obstacles.add(new SnakeObstacle(this.map, tempPoint));
-        }
-        // create left side
-        for ( int i = SnakeConfig.GRID_SIZE; i < SnakeConfig.FIELD_HEIGHT; i += SnakeConfig.GRID_SIZE)
-        {
-            Point tempPoint = new Point(0, i);
-            this.obstacles.add(new SnakeObstacle(this.map, tempPoint));
-        }
-        for ( int i = SnakeConfig.GRID_SIZE; i < SnakeConfig.FIELD_HEIGHT; i += SnakeConfig.GRID_SIZE)
-        {
-            Point tempPoint = new Point(SnakeConfig.FIELD_WIDTH - SnakeConfig.GRID_SIZE, i);
-            this.obstacles.add(new SnakeObstacle(this.map, tempPoint));
-        }
-        for ( int i = SnakeConfig.GRID_SIZE; i < SnakeConfig.FIELD_WIDTH - SnakeConfig.GRID_SIZE; i += SnakeConfig.GRID_SIZE)
-        {
-            Point tempPoint = new Point(i, SnakeConfig.FIELD_HEIGHT - SnakeConfig.GRID_SIZE);
-            this.obstacles.add(new SnakeObstacle(this.map, tempPoint));
-        }
-    }
-
-
     private void newFruit()
     {
         fruits.add(new Fruit(this.map));
     }
 
-    public void removeFruit(Point removePoint)
+    public void removeFruit(GridPoint removePoint)
     {
         for (int i = 0; i < fruits.size(); i++)
         {

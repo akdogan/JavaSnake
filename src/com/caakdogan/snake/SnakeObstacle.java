@@ -8,9 +8,9 @@ import java.util.HashMap;
  */
 public class SnakeObstacle implements GameElement{
 
-    Point p;
+    GridPoint p;
     Color col;
-    public SnakeObstacle(HashMap<Point, GameElement> map, Point p)
+    public SnakeObstacle(HashMap<GridPoint, GameElement> map, GridPoint p)
     {
         this.p = p;
         this.col = SnakeConfig.OBSTACLE_DEFAULT_COLOR;
@@ -26,6 +26,6 @@ public class SnakeObstacle implements GameElement{
     @Override
     public void draw(Graphics g) {
         g.setColor(this.col);
-        g.fillRect(this.p.x, this.p.y, SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
+        g.fillRect(this.p.getCanvasX(), this.p.getCanvasY(), SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
     }
 }

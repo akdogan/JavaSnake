@@ -14,11 +14,8 @@ class TimedMove extends TimerTask
 
     public TimedMove(ArrayList<Snake> TimerSnakes)
     {
-
         this.TimerSnakes = TimerSnakes;
-
     }
-
 
     @Override public void run()
     {
@@ -41,6 +38,5 @@ class TimedMove extends TimerTask
             //System.out.println(dir);
             this.TimerSnakes.get(0).changeDirection(dir);
         }
-
     }
 }

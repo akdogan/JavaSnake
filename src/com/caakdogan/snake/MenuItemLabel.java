@@ -1,31 +1,20 @@
 package com.caakdogan.snake;
 
-import java.awt.*;
 
 /**
  * Created by Arif-Admin on 19.03.2017.
  */
-public class MenuItemLabel {
-    public String label;
-    private Color col;
-    public Font font;
+public class MenuItemLabel extends MenuBlock{
 
-    public MenuItemLabel(String label)
+
+    public MenuItemLabel(String label, int x, int y)
     {
-        this.label = label;
-        this.col = Color.DARK_GRAY;
-        this.font = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
+        super(label, SnakeConfig.MENU_LABEL_FONT, SnakeConfig.MENU_LABEL_COLOR, x, y);
+
     }
 
-    public Color getColor() {
-        return this.col;
+    public void performAction(int key){
+        //TODO Not needed, refactor
     }
 
-    public String getLabel() {
-        return this.label;
-    }
-
-    public Font getFont() {
-        return this.font;
-    }
 }

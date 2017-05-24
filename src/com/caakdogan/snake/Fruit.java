@@ -12,10 +12,10 @@ import java.util.Random;
 
 
 public class Fruit implements GameElement {
-    Point p;
+    GridPoint p;
     private Color col;
 
-    Fruit(HashMap<Point, GameElement> map)
+    Fruit(HashMap<GridPoint, GameElement> map)
     {
         this.p = createPosition(map);
         this.col = SnakeConfig.FRUIT_STANDARD_COLOR;
@@ -23,14 +23,23 @@ public class Fruit implements GameElement {
     }
 
 
-    private Point createPosition(HashMap<Point, GameElement> map)
+    private GridPoint createPosition(HashMap<GridPoint, GameElement> map)
     {
         Random r = new Random();
-        Point tempPoint = new Point();
+        GridPoint tempPoint = new GridPoint();
         do {
-            tempPoint.x = SnakeConfig.GRID_SIZE * (r.nextInt((SnakeConfig.FIELD_WIDTH / SnakeConfig.GRID_SIZE - 2) + 1));
-            tempPoint.y = SnakeConfig.GRID_SIZE * (r.nextInt((SnakeConfig.FIELD_HEIGHT / SnakeConfig.GRID_SIZE - 2) + 1));
+            tempPoint.x = (r.nextInt(SnakeConfig.FIELD_WIDTH ));
+            tempPoint.y = (r.nextInt(SnakeConfig.FIELD_HEIGHT));
         } while (map.containsKey(tempPoint));
+
+
+        System.out.println("!!FRUIT OUT OF FIELD");
+        System.out.println("Canvas X: " + SnakeConfig.CANVAS_WIDTH);
+        System.out.println("Fruit  X: " + tempPoint.getCanvasX());
+        System.out.println("Canvas Y: " + SnakeConfig.CANVAS_HEIGHT);
+        System.out.println("Fruit  Y: " + tempPoint.getCanvasY());
+
+
 
         return tempPoint;
     }
@@ -38,6 +47,6 @@ public class Fruit implements GameElement {
     @Override
     public void draw(Graphics g) {
         g.setColor(this.col);
-        g.fillOval(this.p.x, this.p.y, SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
+        g.fillOval(this.p.getCanvasX(), this.p.getCanvasY(), SnakeConfig.GRID_SIZE, SnakeConfig.GRID_SIZE);
     }
 }

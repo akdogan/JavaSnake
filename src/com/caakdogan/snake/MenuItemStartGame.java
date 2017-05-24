@@ -12,7 +12,6 @@ import java.awt.*;
 // react method would call game.initialize(number of players)
 // --> this would need an general int value in the object to put the information
 
-
 // For selecting colors: (Menu item schould contain possible color modifier
 
 // Instead of returning a value, the value is stored in the menuitem object
@@ -36,9 +35,9 @@ public class MenuItemStartGame extends MenuItem{
     private int numberOfPlayers;
     private MainMenuPanel menu;
 
-    public MenuItemStartGame(String label, boolean selected, int numberOfPlayers, MainMenuPanel menu)
+    public MenuItemStartGame(String label, int x, int y, boolean selected, int numberOfPlayers, MainMenuPanel menu)
     {
-        super(label, selected);
+        super(label, x, y, selected);
         this.numberOfPlayers = numberOfPlayers;
         this.menu = menu;
     }
