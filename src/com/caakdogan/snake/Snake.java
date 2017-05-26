@@ -112,8 +112,8 @@ public class Snake implements KeyReceiver,GameElement{
             this.removeSegment(body.size()-1);
         }
         else {
-            this.growSnake = false;
-        }
+        this.growSnake = false;
+    }
     }
 
 

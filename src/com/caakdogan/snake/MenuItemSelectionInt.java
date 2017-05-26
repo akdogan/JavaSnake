@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by Arif-Admin on 23.03.2017.
  * Backup File of MenuItemSelection Class (probably really bad practice)
  */
-public class MenuItemSelectionInt extends MenuItemSelection {
+public class MenuItemSelectionInt extends MenuItemSelection<Integer> {
 
     private AtomicInteger selector;
 
@@ -19,7 +19,7 @@ public class MenuItemSelectionInt extends MenuItemSelection {
 
     @Override
     public void setSelectorValue(){
-        this.selector.set((Integer) items.get(selectedItemIndex));
+        this.selector.set(items.get(selectedItemIndex));
     }
 
 

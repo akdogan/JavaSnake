@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by Arif-Admin on 24.03.2017.
  */
-public class MenuItemSelectionColor extends MenuItemSelection {
+public class MenuItemSelectionColor extends MenuItemSelection<Color> {
 
 
 
@@ -15,12 +15,12 @@ public class MenuItemSelectionColor extends MenuItemSelection {
     private ColorWrapper selector;
 
 
-    public MenuItemSelectionColor(String label, int x, int y, boolean selected, ArrayList<Color> colors, int defaultSelection, ColorWrapper selector){
+    public MenuItemSelectionColor(String label, int x, int y, boolean selected, ArrayList<Color> items, int defaultSelection, ColorWrapper selector){
 
 
-        super(label, x, y, selected, colors, defaultSelection);
+        super(label, x, y, selected, items, defaultSelection);
         this.selector = selector;
-        this.selector.setColor((Color) items.get(selectedItemIndex));
+        this.selector.setColor(items.get(selectedItemIndex));
     }
 
     private void print(){
@@ -31,7 +31,7 @@ public class MenuItemSelectionColor extends MenuItemSelection {
 
     @Override
     public void setSelectorValue(){
-        this.selector.setColor((Color) items.get(selectedItemIndex));
+        this.selector.setColor(items.get(selectedItemIndex));
     }
 
     @Override
