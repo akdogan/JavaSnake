@@ -1,4 +1,4 @@
-package com.caakdogan.snake;
+package com.caakdogan.shared;
 
 import java.awt.*;
 /**

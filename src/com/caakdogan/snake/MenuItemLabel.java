@@ -1,6 +1,8 @@
 package com.caakdogan.snake;
 
 
+import com.caakdogan.shared.SnakeConfig;
+
 /**
  * Created by Arif-Admin on 19.03.2017.
  */

@@ -1,5 +1,10 @@
 package com.caakdogan.snake;
 
+import com.caakdogan.shared.GameElement;
+import com.caakdogan.shared.GridPoint;
+import com.caakdogan.shared.SnakeConfig;
+import com.caakdogan.shared.SnakeObstacle;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,6 +28,8 @@ public class LevelGenerator {
             case 1: return this.levelOne();
 
             case 2: return this.levelTwo();
+
+            case 3: return this.dynamic();
 
         }
 
@@ -71,6 +78,18 @@ public class LevelGenerator {
         }
 
         return  levelConfig;
+    }
+
+    private ArrayList<SnakeObstacle> dynamic () {
+        FileImporter importer = new FileImporter();
+        ArrayList<GridPoint> obstacleList = importer.parseFile();
+
+        for (int i = 0; i < obstacleList.size(); i++ ) {
+            this.levelConfig.add(new SnakeObstacle(this.map, obstacleList.get(i)));
+
+        }
+
+        return levelConfig;
     }
 
 }

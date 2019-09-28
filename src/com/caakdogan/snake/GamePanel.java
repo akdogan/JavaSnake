@@ -1,9 +1,13 @@
 package com.caakdogan.snake;
 
+import com.caakdogan.shared.GameElement;
+import com.caakdogan.shared.GridPoint;
+import com.caakdogan.shared.SnakeConfig;
+import com.caakdogan.shared.SnakeObstacle;
+
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
-import java.awt.Point;
 import java.util.Timer;
 
 /**
@@ -27,7 +31,7 @@ class GamePanel extends JPanel {
     public GamePanel(int numberOfPlayers, int speed, SnakeFrame game, Color p1, Color p2)
     {
         this.game = game;
-        System.out.println("Starting a " + numberOfPlayers + " Player Game");
+        //System.out.println("Starting a " + numberOfPlayers + " Player Game");
         this.initialize(numberOfPlayers, speed, p1, p2);
         this.game.setSize(SnakeConfig.WINDOW_WIDTH, SnakeConfig.WINDOW_HEIGHT + ( numberOfPlayers * SnakeConfig.MENU_BLOCK_HEIGHT));
     }
@@ -75,7 +79,7 @@ class GamePanel extends JPanel {
         }
 
         LevelGenerator levGen = new LevelGenerator(map);
-        this.obstacles = levGen.generateLevel(0);
+        this.obstacles = levGen.generateLevel(3);
 
         this.newFruit();
         this.drawTask = new TimedDraw(this);
@@ -89,7 +93,7 @@ class GamePanel extends JPanel {
     {
         this.drawTask.switchTaskOff();
         this.timer.cancel();
-        System.out.println("Game Stopped");
+        //System.out.println("Game Stopped");
         ArrayList<String> scores = new ArrayList<>();
         for (int i = 0; i < players.size(); i++)
         {

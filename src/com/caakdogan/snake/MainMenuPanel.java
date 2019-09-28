@@ -1,5 +1,7 @@
 package com.caakdogan.snake;
 
+import com.caakdogan.shared.SnakeConfig;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -113,7 +115,7 @@ class MainMenuPanel extends JPanel implements KeyReceiver{
     }
 
     public void startGame(int numberOfPlayers){
-        System.out.println("!!MainMenuPanel:" + speed);
+        //System.out.println("!!MainMenuPanel:" + speed);
         // Hier die benötigten Werte einfach aus dem MenuItem rausziehen;
         // Werte können dann innerhalb der MenuItems hinterlegt werden.
         this.game.startGame(numberOfPlayers, this.speed.get(), this.p1.getColor(), this.p2.getColor());

@@ -1,4 +1,4 @@
-package com.caakdogan.snake;
+package com.caakdogan.shared;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 /**
  * Created by Arif-Admin on 10.03.2017.
  */
-public class SnakeObstacle implements GameElement{
+public class SnakeObstacle implements GameElement {
 
     GridPoint p;
     Color col;

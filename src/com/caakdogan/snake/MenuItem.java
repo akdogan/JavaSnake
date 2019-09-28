@@ -1,5 +1,7 @@
 package com.caakdogan.snake;
 
+import com.caakdogan.shared.SnakeConfig;
+
 import java.awt.*;
 
 /**

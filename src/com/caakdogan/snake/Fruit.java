@@ -1,5 +1,9 @@
 package com.caakdogan.snake;
 
+import com.caakdogan.shared.GameElement;
+import com.caakdogan.shared.GridPoint;
+import com.caakdogan.shared.SnakeConfig;
+
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Random;
@@ -33,11 +37,11 @@ public class Fruit implements GameElement {
         } while (map.containsKey(tempPoint));
 
 
-        System.out.println("!!FRUIT OUT OF FIELD");
-        System.out.println("Canvas X: " + SnakeConfig.CANVAS_WIDTH);
-        System.out.println("Fruit  X: " + tempPoint.getCanvasX());
-        System.out.println("Canvas Y: " + SnakeConfig.CANVAS_HEIGHT);
-        System.out.println("Fruit  Y: " + tempPoint.getCanvasY());
+        //System.out.println("!!FRUIT OUT OF FIELD");
+        //System.out.println("Canvas X: " + SnakeConfig.CANVAS_WIDTH);
+        //System.out.println("Fruit  X: " + tempPoint.getCanvasX());
+        //System.out.println("Canvas Y: " + SnakeConfig.CANVAS_HEIGHT);
+        //System.out.println("Fruit  Y: " + tempPoint.getCanvasY());
 
 
 

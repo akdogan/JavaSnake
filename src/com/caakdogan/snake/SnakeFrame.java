@@ -29,7 +29,7 @@ class SnakeFrame extends JFrame {
     {
         this.mainMenuPanel = new MainMenuPanel(this, heading, labels );
         this.addNewPanel(mainMenuPanel);
-        System.out.println("MainMenuPanel added");
+        //System.out.println("MainMenuPanel added");
     }
 
 
@@ -37,12 +37,12 @@ class SnakeFrame extends JFrame {
     {
         this.gamePanel = new GamePanel(numberOfPlayers, speed, this, p1, p2);
         this.addNewPanel(gamePanel);
-        System.out.println("gamePanel added");
+        //System.out.println("gamePanel added");
     }
 
     public void stopGame(ArrayList<String> scores)
     {
-        System.out.println(this.getComponent(0));
+        //System.out.println(this.getComponent(0));
         this.startMenu("Game Over", scores);
 
     }

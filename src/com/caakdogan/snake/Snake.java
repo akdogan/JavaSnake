@@ -4,12 +4,17 @@ package com.caakdogan.snake;
  * Created by Arif-Admin on 03.03.2017.
  */
 
+import com.caakdogan.shared.GameElement;
+import com.caakdogan.shared.GridPoint;
+import com.caakdogan.shared.SnakeConfig;
+import com.caakdogan.shared.SnakeObstacle;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 
-public class Snake implements KeyReceiver,GameElement{
+public class Snake implements KeyReceiver,GameElement {
     private ArrayList<GridPoint> body;
     private Color col;
     private Color defaultColor;
@@ -128,7 +133,7 @@ public class Snake implements KeyReceiver,GameElement{
                 this.setGrowth(true);
                 this.score++;
             }
-            else if (this.gamePanel.map.get(tempPoint) instanceof Snake || this.gamePanel.map.get(tempPoint) instanceof SnakeObstacle )
+            else if (this.gamePanel.map.get(tempPoint) instanceof Snake || this.gamePanel.map.get(tempPoint) instanceof SnakeObstacle)
             {
                 this.gamePanel.stopGame();
             }
@@ -230,7 +235,7 @@ public class Snake implements KeyReceiver,GameElement{
     @Override
     public void reactToKey(KeyEvent e) {
         if (pause) {pause = false;}
-        System.out.println("Snake received Key: " + e.getKeyCode());
+        //System.out.println("Snake received Key: " + e.getKeyCode());
         int key = e.getKeyCode();
         if ( key == leftKey )  { this.changeDirection(Snake.LEFT); }
         if ( key == upKey )    { this.changeDirection(Snake.UP); }

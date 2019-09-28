@@ -1,6 +1,8 @@
 package com.caakdogan.snake;
 
 
+import com.caakdogan.shared.SnakeConfig;
+
 import javax.swing.*;
 
 public class Main {
