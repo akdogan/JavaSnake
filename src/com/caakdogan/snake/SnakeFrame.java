@@ -33,9 +33,9 @@ class SnakeFrame extends JFrame {
     }
 
 
-    public void startGame(int numberOfPlayers, int speed, Color p1, Color p2)
+    public void startGame(int numberOfPlayers, int speed, Color p1, Color p2, String mapName)
     {
-        this.gamePanel = new GamePanel(numberOfPlayers, speed, this, p1, p2);
+        this.gamePanel = new GamePanel(numberOfPlayers, speed, this, p1, p2, mapName);
         this.addNewPanel(gamePanel);
         //System.out.println("gamePanel added");
     }

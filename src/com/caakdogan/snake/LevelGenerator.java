@@ -18,23 +18,20 @@ public class LevelGenerator {
     private HashMap<GridPoint, GameElement> map;
 
     public LevelGenerator(HashMap<GridPoint, GameElement> map){
-        levelConfig = new ArrayList<SnakeObstacle>();
+        this.levelConfig = new ArrayList<>();
         this.map = map;
     }
 
-    public ArrayList<SnakeObstacle> generateLevel (int level){
+    public ArrayList<SnakeObstacle> generateLevel (String fileName){
+        FileHandler importer = new FileHandler();
+        ArrayList<GridPoint> obstacleList = importer.parseFile(fileName);
 
-        switch (level) {
-            case 1: return this.levelOne();
-
-            case 2: return this.levelTwo();
-
-            case 3: return this.dynamic();
+        for (int i = 0; i < obstacleList.size(); i++ ) {
+            this.levelConfig.add(new SnakeObstacle(this.map, obstacleList.get(i)));
 
         }
 
-
-        return  this.levelConfig;
+        return this.levelConfig;
     }
 
     private ArrayList<SnakeObstacle> levelOne () {
@@ -80,9 +77,9 @@ public class LevelGenerator {
         return  levelConfig;
     }
 
-    private ArrayList<SnakeObstacle> dynamic () {
-        FileImporter importer = new FileImporter();
-        ArrayList<GridPoint> obstacleList = importer.parseFile();
+    private ArrayList<SnakeObstacle> dynamic (String fileName) {
+        FileHandler importer = new FileHandler();
+        ArrayList<GridPoint> obstacleList = importer.parseFile(fileName);
 
         for (int i = 0; i < obstacleList.size(); i++ ) {
             this.levelConfig.add(new SnakeObstacle(this.map, obstacleList.get(i)));

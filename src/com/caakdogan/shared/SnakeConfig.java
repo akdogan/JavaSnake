@@ -6,6 +6,10 @@ import java.awt.*;
  * Created by Arif-Admin on 05.03.2017.
  */
 public class SnakeConfig {
+    //Filesystem
+    public static final String MAPS_DIRECTORY = "./res/maps/";
+    public static final String MAPS_EXT = ".snk";
+
     // Default Sizes
     public static final int GRID_SIZE = 13;
 

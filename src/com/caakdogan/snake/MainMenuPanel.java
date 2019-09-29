@@ -1,6 +1,7 @@
 package com.caakdogan.snake;
 
 import com.caakdogan.shared.SnakeConfig;
+import com.caakdogan.shared.Tools;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ class MainMenuPanel extends JPanel implements KeyReceiver{
     private ColorWrapper p2;
     private int p2DefaultColorIndex;
     public AtomicInteger speed;
-    public AtomicInteger selectedLevel;
+    public SnFileName mapName;
 
 
     public MainMenuPanel(SnakeFrame game, String heading, ArrayList<String> labels){
@@ -44,7 +45,12 @@ class MainMenuPanel extends JPanel implements KeyReceiver{
         this.p1DefaultColorIndex = 0;
         this.p2DefaultColorIndex = 2;
 
+
         ArrayList<Color> colList = getListOfColors();
+
+
+
+
 
         this.p1 = new ColorWrapper(colList.get(p1DefaultColorIndex));
         this.p2 = new ColorWrapper(colList.get(p2DefaultColorIndex));
@@ -62,6 +68,22 @@ class MainMenuPanel extends JPanel implements KeyReceiver{
                 false,
                 2,
                 this));
+
+
+
+        FileHandler f = new FileHandler();
+        ArrayList<String> mapList = f.getListOfMaps(SnakeConfig.MAPS_DIRECTORY);
+        this.mapName = new SnFileName(mapList.get(0));
+        // Menu Item for Level Selection
+        menuActionItems.addMenuItem(new MenuItemSelectionString(
+                "Map: ",
+                menuActionItems.getCurrentX(),
+                menuActionItems.getCurrentY(),
+                false,
+                mapList,
+                0,
+                this.mapName
+        ));
 
         //int[] speed = {0, 1, 2, 3, 4, 5};
         menuActionItems.addMenuItem(new MenuItemSelectionInt(
@@ -115,10 +137,9 @@ class MainMenuPanel extends JPanel implements KeyReceiver{
     }
 
     public void startGame(int numberOfPlayers){
-        //System.out.println("!!MainMenuPanel:" + speed);
         // Hier die benötigten Werte einfach aus dem MenuItem rausziehen;
         // Werte können dann innerhalb der MenuItems hinterlegt werden.
-        this.game.startGame(numberOfPlayers, this.speed.get(), this.p1.getColor(), this.p2.getColor());
+        this.game.startGame(numberOfPlayers, this.speed.get(), this.p1.getColor(), this.p2.getColor(), this.mapName.getFileName());
 
     }
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
  */
 public abstract class MenuItemSelection<T> extends MenuItem {
     private String labelBase;
+    private String labelAppendix;
     public ArrayList<T> items;
     public int selectedItemIndex;
 
@@ -19,10 +20,15 @@ public abstract class MenuItemSelection<T> extends MenuItem {
         this.items = items;
         this.selectedItemIndex = defaultSelection;
         this.labelBase = label;
-        this.setLabel(this.labelBase + " " + (this.selectedItemIndex + 1) );
+        this.labelAppendix = this.setLabelAppendix();
+        //this.setLabel(this.labelBase + " " + (this.selectedItemIndex + 1) );
+
+        this.setLabel(this.labelBase + " " + this.labelAppendix);
     }
 
     public abstract void setSelectorValue();
+
+    public abstract String setLabelAppendix();
 
 
     @Override
@@ -43,7 +49,10 @@ public abstract class MenuItemSelection<T> extends MenuItem {
             selectedItemIndex = 0;
         }
         this.setSelectorValue();
-        this.setLabel(this.labelBase + " " + (this.selectedItemIndex + 1) );    }
+        //this.setLabel(this.labelBase + " " + (this.selectedItemIndex + 1) );
+        this.labelAppendix = this.setLabelAppendix();
+        this.setLabel(this.labelBase + " " + this.labelAppendix);
+        }
 
     void selectPrevious(){
         if (selectedItemIndex > 0)
@@ -55,7 +64,9 @@ public abstract class MenuItemSelection<T> extends MenuItem {
             selectedItemIndex = items.size() - 1;
         }
         this.setSelectorValue();
-        this.setLabel(this.labelBase + " " + (this.selectedItemIndex + 1) );
+        //this.setLabel(this.labelBase + " " + (this.selectedItemIndex + 1) );
+        this.labelAppendix = this.setLabelAppendix();
+        this.setLabel(this.labelBase + " " + this.labelAppendix);
     }
 
 

@@ -23,15 +23,14 @@ public class MenuItemSelectionColor extends MenuItemSelection<Color> {
         this.selector.setColor(items.get(selectedItemIndex));
     }
 
-    private void print(){
-        //System.out.println(label);
-        //System.out.print("Item: " + this.selectedItem);
-    }
-
-
     @Override
     public void setSelectorValue(){
         this.selector.setColor(items.get(selectedItemIndex));
+    }
+
+    @Override
+    public String setLabelAppendix() {
+        return "";
     }
 
     @Override

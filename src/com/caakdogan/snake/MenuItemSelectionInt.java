@@ -22,6 +22,13 @@ public class MenuItemSelectionInt extends MenuItemSelection<Integer> {
         this.selector.set(items.get(selectedItemIndex));
     }
 
+    @Override
+    public String setLabelAppendix() {
+        return Integer.toString(selectedItemIndex);
+    }
+
+
+
 
 
 
